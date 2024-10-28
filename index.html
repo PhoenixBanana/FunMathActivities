@@ -1,8 +1,71 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Hello There</title>
-    </head>
-    <body>
-        <h1>Hello There</h1>
-    </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>FunMathActivities</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  
+  <h1>A website by Phoenix Banana</h1>
+  <h2>This website is made by a nerd for nerds!</h2>
+  <p>Joke/Riddle: What is a ghost's favorite data type? A BOOlean!</p>
+  <p>Enter a number from 1 - 100 in this box, then when you are satisfied with your entry, press the "Check Answer" button to confirm.</p>
+  <textarea id="textBox" placeholder="Type here..."></textarea>
+  <button id="checkButton">Check Answer</button>
+  <p id="guessDisplay">Guesses: 0</p>
+  <p id="resultDisplay"></p>
+  <p>Click this button to earn points! (Points gained per click increased every ten clicks)(Points reset with each page reload.)</p>
+  <button id="clickButton">Tap tap tap!</button>
+  <p id="scoreDisplay">Score: 0</p>
+  <script>
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
+    const textBox = document.getElementById('textBox');
+    const checkButton = document.getElementById('checkButton');
+    const resultDisplay = document.getElementById('resultDisplay');
+    const clickButton = document.getElementById('clickButton');
+    let clickerScore = 0;
+    const scoreDisplay = document.getElementById('scoreDisplay');
+    let pointsPerClick = 1; 
+    let clickCount = 0;
+    let pointsIncrement = 1;
+    let guessCount = 0;
+    const guessDisplay = document.getElementById('guessDisplay');
+
+    function checkAnswer() {
+      const userAnswer = parseInt(textBox.value);
+      guessCount++;
+      guessDisplay.textContent = "Guesses: " + guessCount;
+      if (userAnswer === randomNumber) {
+        resultDisplay.textContent = "Correct!";
+        randomNumber = Math.floor(Math.random() * 100) + 1;
+        guessCount = 0;
+      } else if(userAnswer <  randomNumber) {
+        resultDisplay.textContent = "No, the number is bigger. Try again!";
+      } else if(userAnswer > randomNumber) {
+        resultDisplay.textContent = "Not quite, the number is smaller than that. Try again!";
+      }
+    }
+
+    function incrementScore() {
+      clickerScore += pointsPerClick;
+      scoreDisplay.textContent = "Score: " + clickerScore;
+      clickCount++;
+
+      if (clickCount === 10) {
+        pointsPerClick += pointsIncrement;
+        pointsIncrement++;
+        clickCount = 0;
+      }
+    }
+
+    checkButton.addEventListener('click', checkAnswer);
+    clickButton.addEventListener('click', incrementScore);
+
+  </script>
+</body>
+
 </html>
