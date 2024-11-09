@@ -19,7 +19,6 @@
   <button id="checkButton">Check Answer</button>
   <p id="guessDisplay">Guesses: 0</p>
   <p>Average amount of guesses: 7</p>
-  <p id="resultDisplay"></p>
   <p>Click this button to earn points! (Points gained per click increased every ten clicks)(Points reset with each page reload.)</p>
   <button id="clickButton">Tap tap tap!</button>
   <p id="scoreDisplay">Score: 0</p>
@@ -42,13 +41,13 @@
       guessCount++;
       guessDisplay.textContent = "Guesses: " + guessCount;
       if (userAnswer === randomNumber) {
-        resultDisplay.textContent = "Correct!";
+        alert("Correct!");
         randomNumber = Math.floor(Math.random() * 100) + 1;
         guessCount = 0;
       } else if(userAnswer <  randomNumber) {
-        resultDisplay.textContent = "No, the number is bigger. Try again!";
+        alert("No, the number is bigger. Try again!");
       } else if(userAnswer > randomNumber) {
-        resultDisplay.textContent = "Not quite, the number is smaller than that. Try again!";
+        alert("Not quite, the number is smaller than that. Try again!");
       }
     }
 
