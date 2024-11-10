@@ -9,17 +9,17 @@
 </head>
 
 <body>
-  
-  <h2 id="topScore">The best score on the guessing game was 2 guesses, which was gotten twice in a row, done by ninjastargx! (That is his Roblox username.)</h2>
   <h1>A website by Phoenix Banana</h1>
   <h2>This website is made by a nerd for nerds!</h2>
-  <p>Joke/Riddle: What is a ghost's favorite data type? A BOOlean!</p>
-  <p>Enter a number from 1 - 100 in this box, then when you are satisfied with your entry, press the "Check Answer" button to confirm. Every time you get the number correct, the number changes.</p>
-  <textarea id="textBox" placeholder="Type here..."></textarea>
+  <p id="joke">Joke/Riddle: What is a tree's favorite drink?</p>
+  <textarea id="jokeAnswer" placeholder="Only capitalize the first letter."></textarea>
+  <button id="answerButton">Know the answer to the riddle?</button>
+  <p>Enter a number from 1 - 100 in this box, then when you are satisfied with your entry, press the "Check Answer" button to confirm.</p>
+  <textarea id="guessBox" placeholder="Type your guess here..."></textarea>
   <button id="checkButton">Check Answer</button>
   <p id="guessDisplay">Guesses: 0</p>
   <p>Average amount of guesses: 7</p>
-  <p>Click this button to earn points! (Points gained per click increased every ten clicks)(Points reset with each page reload.)</p>
+  <p>Click this button to earn points! (Points gained per click increased every ten clicks)</p>
   <button id="clickButton">Tap tap tap!</button>
   <p id="scoreDisplay">Score: 0</p>
   <script>
@@ -36,12 +36,25 @@
     let guessCount = 0;
     const guessDisplay = document.getElementById('guessDisplay');
 
+    function checkJokeAnswer() {
+      if (document.getElementById("jokeAnswer").value === "Root beer") {
+    alert("That's correct! Check back again soon for a new joke/riddle!");
+      } else if (document.getElementById("jokeAnswer").value === "42") {
+    alert("Hitch-hiker's Guide To The Galaxy?");
+} else if (document.getElementById("jokeAnswer").value === "37") {
+    alert("Really?");
+} else {
+  alert("No, that's not it. Keep trying!");
+}
+
+    }
+
     function checkAnswer() {
-      const userAnswer = parseInt(textBox.value);
+      const userAnswer = parseInt(guessBox.value);
       guessCount++;
       guessDisplay.textContent = "Guesses: " + guessCount;
       if (userAnswer === randomNumber) {
-        alert("Correct!");
+        alert("Correct! The number is now different!");
         randomNumber = Math.floor(Math.random() * 100) + 1;
         guessCount = 0;
       } else if(userAnswer <  randomNumber) {
@@ -63,6 +76,7 @@
       }
     }
 
+    answerButton.addEventListener('click', checkJokeAnswer);
     checkButton.addEventListener('click', checkAnswer);
     clickButton.addEventListener('click', incrementScore);
 
