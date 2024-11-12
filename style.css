@@ -1,3 +1,21 @@
 #joke {
     color: #7700ff
+}  
+
+body {
+    background-color: lavender;
+    font-family: "Rubik Glitch", sans-serif;
+}
+
+h1 {
+    font-family: "Roboto Mono", sans-serif;
+}
+
+h2 {
+    font-family: "Roboto Mono", sans-serif;
+}
+
+h3 {
+    font-family: "Roboto Mono", sans-serif;
+    color: #f00;
 }

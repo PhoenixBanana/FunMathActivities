@@ -6,13 +6,21 @@
   <meta name="viewport" content="width=device-width">
   <title>Fun Math Activities</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Rubik+Glitch&display=swap" rel="stylesheet">
 </head>
 
 <body>
+  <h3>An update to give thanks to all who've visited my site.</h3>
+  <p>Site news: Mega update! Revamped text, background color, the Joke/Riddle, and possibly added some secrets/easter eggs for you all to enjoy! Hopefully this was in time for the Thanksgiving season and christmas (I have a special bonus planned for that holiday) and I wish you all a safe and happy fall and start of winter.</p>
   <h1>A website by Phoenix Banana</h1>
   <h2>This website is made by a nerd for nerds!</h2>
   <p id="joke">Joke/Riddle: What is a tree's favorite drink?</p>
-  <textarea id="jokeAnswer" placeholder="Only capitalize the first letter."></textarea>
+  <textarea id="jokeAnswer" placeholder="Use proper punctuation."></textarea>
   <button id="answerButton">Know the answer to the riddle?</button>
   <p>Enter a number from 1 - 100 in this box, then when you are satisfied with your entry, press the "Check Answer" button to confirm.</p>
   <textarea id="guessBox" placeholder="Type your guess here..."></textarea>
@@ -37,25 +45,58 @@
     const guessDisplay = document.getElementById('guessDisplay');
 
     function checkJokeAnswer() {
-       if (document.getElementById("jokeAnswer").value === "Root beer") {
-  alert("That's correct! Check back again soon for a new joke/riddle!");
-} else if (document.getElementById("jokeAnswer").value === "42") {
-  alert("Hitch-hiker's Guide To The Galaxy?");
-} else if (document.getElementById("jokeAnswer").value === "37") {
-  alert("Really?");
-} else if (document.getElementById("jokeAnswer").value === "1985") {
-  alert("Do you also want to rule the world?");
-} else if (document.getElementById("jokeAnswer").value === "1987") {
-  alert("You gave me up, you let me down, you ran around and deserted me. You made me cry, you said 'Goodbye', you told a lie and hurt me.");
-} else if (document.getElementById("jokeAnswer").value === "69" || "skibidi" || "rizz" || "gyatt" || "fortnite") {
-  alert("Stay away from me and my family.");
-} else if (document.getElementById("jokeAnswer").value === "Bill Cipher" || "Cipher" || "Bill") {
-  alert("Bad deal. No dice.");
-} else if (document.getElementById("jokeAnswer").value === "fuck" || "shit" || "bitch" || "ass" || "dick" || "bastard") {
-  alert("That is highly inappropriate. Please think twice or even thrice before saying such terrible things, you wouldn't talk to your kind, loving mother that way, so don't talk that way to others, or yourself.");
-} else {
-  alert("No, that's not it. Keep trying!");
-}
+      var answer = document.getElementById("jokeAnswer").value.toLowerCase();
+      answer = answer.replace(/\s+/g, " ").replace(/^\s+/, "").replace(/\s+$/, "");
+      switch(answer)
+      {
+        case "root beer":
+          alert("That's correct! Check back again soon for a new joke/riddle!");
+          break;
+        case "42":
+          alert("Hitch-hiker's Guide To The Galaxy?");
+          break;
+        case "69":
+        case "skibidi":
+        case "rizz":
+        case "gyatt":
+        case "fortnite":
+          alert("Stay away from me and my family.");
+          break;
+        case "bill cipher":
+        case "cipher":
+        case "bill":
+          alert("Bad deal. No dice.");
+          break;
+        case "1985":
+          alert("Do you also want to rule the world?");
+          break;
+        case "1987":
+          alert("You gave me up, you let me down, you ran around and deserted me. You made me cry, you said 'Goodbye', you told a lie and hurt me.");
+          break;
+        case "37":
+          alert("Really?");
+          break;
+        case "fuck":
+        case "shit":
+        case "bitch":
+        case "ass":
+        case "dick":
+        case "bastard":
+          alert("That is highly inappropriate. Please think twice or even thrice before saying such terrible things, you wouldn't talk to your kind, loving mother that way, so don't talk that way to others, or yourself.");
+          break;
+        case "five nights at freddy's":
+        case "fnaf":
+          alert("Fazbear Ent. established 1983");
+          break;
+        case "2014":
+          alert("Five Nights at Freddy's");
+          break;
+        case "1983":
+          alert("Wasn't there some game about a certain franchise established this year?");
+          break;
+        default:
+          alert("No, that's not it. Keep trying!");
+      }
     }
     function checkAnswer() {
       const userAnswer = parseInt(guessBox.value);
