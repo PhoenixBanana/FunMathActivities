@@ -37,18 +37,24 @@
     const guessDisplay = document.getElementById('guessDisplay');
 
     function checkJokeAnswer() {
-      if (document.getElementById("jokeAnswer").value === "Root beer") {
-    alert("That's correct! Check back again soon for a new joke/riddle!");
-      } else if (document.getElementById("jokeAnswer").value === "42") {
-    alert("Hitch-hiker's Guide To The Galaxy?");
+       if (document.getElementById("jokeAnswer").value === "Root beer") {
+  alert("That's correct! Check back again soon for a new joke/riddle!");
+} else if (document.getElementById("jokeAnswer").value === "42") {
+  alert("Hitch-hiker's Guide To The Galaxy?");
 } else if (document.getElementById("jokeAnswer").value === "37") {
-    alert("Really?");
-} else {
-  alert("No, that's not it. Keep trying!");
+  alert("Really?");
+} else if (document.getElementById("jokeAnswer").value === "1985") {
+  alert("Do you also want to rule the world?");
+} else if (document.getElementById("jokeAnswer").value === "1987") {
+  alert("You gave me up, you let me down, you ran around and deserted me. You made me cry, you said 'Goodbye', you told a lie and hurt me.");
+} else if (document.getElementById("jokeAnswer").value === "69" || "skibidi" || "rizz" || "gyatt" || "fortnite") {
+  window.location.href = "https://www.google.com/search?q=%22Stay+away%22+restraining+order";
+} else if (document.getElementById("jokeAnswer").value === "Bill Cipher" || "Cipher" || "Bill") {
+  alert("Bad deal. No dice.");
+} else if (document.getElementById("jokeAnswer").value === "fuck" || "shit" || "bitch" || "ass" || "dick" || "bastard") {
+  window.location.href = "https://www.google.com/search?q=Highly+inappropriate+definition";
 }
-
     }
-
     function checkAnswer() {
       const userAnswer = parseInt(guessBox.value);
       guessCount++;
