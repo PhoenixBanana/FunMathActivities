@@ -8,7 +8,9 @@ body {
 }
 
   #gameCanvas {
-    border: 2px solid black;
+    border-width: 8px;
+    border-style: solid;
+    border-color: black;
     background-color: #70c5ce;
   }
 
