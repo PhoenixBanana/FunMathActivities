@@ -10,8 +10,8 @@ body {
   #gameCanvas {
     border-width: 8px;
     border-style: solid;
-    border-color: black;
-    background-color: #70c5ce;
+    border-color: purple;
+    background-color: #000;
   }
 
 h1 {

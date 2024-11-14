@@ -135,8 +135,8 @@
 const ctx = canvas.getContext('2d');
 
 // Game settings
-const GRAVITY = 1;
-const FLAP_STRENGTH = -12;
+const GRAVITY = 0.25;
+const FLAP_STRENGTH = -5;
 const SPAWN_RATE = 90; // frames
 const OBSTACLE_WIDTH = 50;
 const OBSTACLE_SPACING = 200;
@@ -209,9 +209,9 @@ function checkCollisions() {
 
 // Draw score
 function drawScore() {
-  ctx.fillStyle = '#000';
+  ctx.fillStyle = '#fff';
   ctx.font = '16px Arial';
-  ctx.fillText('Score: ' + score, 10, 20);
+  ctx.fillText('Pipes Passed: ' + score, 10, 20);
 }
 
 // Update game state
