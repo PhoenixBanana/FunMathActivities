@@ -32,6 +32,7 @@
   <p id="scoreDisplay">Score: 0</p>
   <h4>Click on this Floppy Bird game window to play</h4>
   <canvas id="gameCanvas" width="320" height="480"></canvas>
+  <button id="FloppyBirdRedirect">Go to Rage-Quit Floppy Bird!</button>
   <script>
     let randomNumber = Math.floor(Math.random() * 100) + 1;
     const textBox = document.getElementById('textBox');
@@ -127,9 +128,14 @@
       }
     }
 
+    function RQFBRedirection() { 
+      window.open('https://phoenixbanana.github.io/FloppyBird/'); 
+    }
+
     answerButton.addEventListener('click', checkJokeAnswer);
     checkButton.addEventListener('click', checkAnswer);
     clickButton.addEventListener('click', incrementScore);
+    FloppyBirdRedirect.addEventListener('click', RQFBRedirection);
 
     const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
