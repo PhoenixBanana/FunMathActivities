@@ -7,6 +7,11 @@ body {
     font-family: "Rubik Glitch", sans-serif;
 }
 
+  #gameCanvas {
+    border: 2px solid black;
+    background-color: #70c5ce;
+  }
+
 h1 {
     font-family: "Roboto Mono", sans-serif;
 }
@@ -18,4 +23,15 @@ h2 {
 h3 {
     font-family: "Roboto Mono", sans-serif;
     color: #f00;
+}
+
+h4 {
+    font-family: "Roboto Mono", sans-serif;
+}
+
+#clickButton {
+    width: 150px;
+    height: 150px;
+    font-size: 25px;
+    background-color: #f00;
 }
