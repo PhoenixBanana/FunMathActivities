@@ -16,8 +16,15 @@ let randomNumber = Math.floor(Math.random() * 100) + 1;
       answer = answer.replace(/\s+/g, " ").replace(/^\s+/, "").replace(/\s+$/, "");
       switch(answer)
       {
-        case "root beer":
+        case "Hampire":
+        case "A Hampire":
           alert("That's correct! Check back again soon for a new joke/riddle!");
+          break;
+        case "What is a hampire":
+        case "What is a hampire?":
+        case "Who is a hampire":
+        case "Who is a hampire?":
+          alert("This isn't Jeopardy, but I'll allow it. Correct!");
           break;
         case "42":
           alert("Hitch-hiker's Guide To The Galaxy?");
