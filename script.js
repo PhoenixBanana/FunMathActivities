@@ -129,22 +129,22 @@ let obstacles = [];
 let frame = 0;
 let score = 0;
 let gameOver = false;
+let gameStarted = false; // Ensures game starts only after the first click
 
 function drawBird() {
   ctx.save();
   const birdX = 50; // Fixed x position for the bird
-  let rotation;
 
-  if (birdVelocity < 0) {
-    
-    rotation = Math.max(birdVelocity / 5, -5); // Adjust divisor and limit for upward
-  } else {
-    
-    rotation = Math.min(birdVelocity / 10, 50); // Adjust divisor and limit for downward
-  }
+  // Calculate rotation angle based on velocity
+  let rotation = birdVelocity * 2; // Base rotation proportional to velocity
+  rotation = Math.max(rotation, -90); // Clamp rotation to a minimum of -90° (upward limit)
+  rotation = Math.min(rotation, 90);  // Clamp rotation to a maximum of 90° (downward limit)
 
+  // Translate and rotate the canvas to simulate bird rotation
   ctx.translate(birdX + birdWidth / 2, birdY + birdHeight / 2);
-  ctx.rotate(rotation);
+  ctx.rotate((rotation * Math.PI) / 180); // Convert degrees to radians
+
+  // Draw the bird (centered on the rotated position)
   ctx.fillStyle = '#FF0';
   ctx.fillRect(-birdWidth / 2, -birdHeight / 2, birdWidth, birdHeight);
 
@@ -152,7 +152,7 @@ function drawBird() {
 }
 
 
-// Handle bird physics
+// Update bird physics
 function updateBird() {
   if (birdFlap) {
     birdVelocity = FLAP_STRENGTH;
@@ -161,7 +161,7 @@ function updateBird() {
   birdVelocity += GRAVITY;
   birdY += birdVelocity;
 
-  if (birdY < 0) birdY = 0;
+  if (birdY < 0) birdY = 0; // Prevent bird from going off the top
   if (birdY + birdHeight > gameCanvas.height) {
     birdY = gameCanvas.height - birdHeight;
     gameOver = true;
@@ -171,27 +171,35 @@ function updateBird() {
 // Generate obstacles
 function generateObstacles() {
   if (frame % SPAWN_RATE === 0 && !gameOver) {
-    let gapY = Math.random() * (gameCanvas.height - 200);
+    let gapY = Math.random() * (gameCanvas.height - OBSTACLE_SPACING);
     obstacles.push({ x: gameCanvas.width, gapY: gapY });
   }
   obstacles.forEach((obstacle, index) => {
-    obstacle.x -= 3;
-    if (obstacle.x + OBSTACLE_WIDTH < 0) obstacles.splice(index, 1);
+    obstacle.x -= 3; // Move obstacle left
+    if (obstacle.x + OBSTACLE_WIDTH < 0) {
+      obstacles.splice(index, 1); // Remove off-screen obstacles
+      score++; // Increment score for passing an obstacle
+    }
   });
 }
 
 // Draw obstacles
 function drawObstacles() {
-  ctx.fillStyle = '#228B22';
-  obstacles.forEach(obstacle => {
-    ctx.fillRect(obstacle.x, 0, OBSTACLE_WIDTH, obstacle.gapY);
-    ctx.fillRect(obstacle.x, obstacle.gapY + 100, OBSTACLE_WIDTH, gameCanvas.height - obstacle.gapY - 100);
+  ctx.fillStyle = '#964B00';
+  obstacles.forEach((obstacle) => {
+    ctx.fillRect(obstacle.x, 0, OBSTACLE_WIDTH, obstacle.gapY); // Top pipe
+    ctx.fillRect(
+      obstacle.x,
+      obstacle.gapY + 100,
+      OBSTACLE_WIDTH,
+      gameCanvas.height - obstacle.gapY - 100
+    ); // Bottom pipe
   });
 }
 
 // Check collisions
 function checkCollisions() {
-  obstacles.forEach(obstacle => {
+  obstacles.forEach((obstacle) => {
     if (50 + birdWidth > obstacle.x && 50 < obstacle.x + OBSTACLE_WIDTH) {
       if (birdY < obstacle.gapY || birdY + birdHeight > obstacle.gapY + 100) {
         gameOver = true;
@@ -204,31 +212,7 @@ function checkCollisions() {
 function drawScore() {
   ctx.fillStyle = '#fff';
   ctx.font = '16px Arial';
-  ctx.fillText('Pipes Passed: ' + score, 10, 20);
-}
-
-// Update game state
-function update() {
-  if (gameOver) {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-    ctx.fillRect(0, gameCanvas.height / 2 - 30, gameCanvas.width, 60);
-    ctx.fillStyle = '#FFF';
-    ctx.font = '30px Arial';
-    ctx.fillText('Game Over', gameCanvas.width / 2 - 80, gameCanvas.height / 2);
-    return;
-  }
-
-  frame++;
-  ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-  updateBird();
-  generateObstacles();
-  drawBird();
-  drawObstacles();
-  drawScore();
-  checkCollisions();
-
-  if (frame % 100 === 0 && !gameOver) score++;
-  requestAnimationFrame(update);
+  ctx.fillText('Score: ' + score, 10, 20);
 }
 
 // Reset game
@@ -238,22 +222,60 @@ function resetGame() {
   birdFlap = false;
   obstacles = [];
   frame = 0;
-  score = -1;
+  score = 0;
   gameOver = false;
+  gameStarted = false;
   update();
 }
 
-// Event listener for bird flap and game reset
+// Update game state
+function update() {
+  ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+
+  if (!gameStarted) {
+    // Display "Click to Start" message
+    ctx.fillStyle = '#FFF';
+    ctx.font = '20px Arial';
+    ctx.fillText('Click to Start', gameCanvas.width / 2 - 60, gameCanvas.height / 2);
+    return;
+  }
+
+  if (gameOver) {
+    // Display "Game Over" message
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    ctx.fillRect(0, gameCanvas.height / 2 - 30, gameCanvas.width, 60);
+    ctx.fillStyle = '#FFF';
+    ctx.font = '30px Arial';
+    ctx.fillText('Game Over', gameCanvas.width / 2 - 80, gameCanvas.height / 2);
+    return;
+  }
+
+  frame++;
+  updateBird();
+  generateObstacles();
+  drawBird();
+  drawObstacles();
+  drawScore();
+  checkCollisions();
+
+  requestAnimationFrame(update);
+}
+
+// Event listener for bird flap and game start
 gameCanvas.addEventListener('click', () => {
-    if (gameOver) {
-            resetGame();
-    } else {
-      birdFlap = true;
-    }
+  if (!gameStarted) {
+    gameStarted = true;
+    update();
+  } else if (gameOver) {
+    resetGame();
+  } else {
+    birdFlap = true;
+  }
 });
 
-// Start the game
+// Initial call to draw the start screen
 update();
+
 
 
 const artCanvas = document.getElementById('artCanvas');
@@ -365,7 +387,7 @@ function floodFill(e) {
     const key = `${currentX},${currentY}`;
     if (visited.has(key)) continue;
     visited.add(key);
-    console.log(key);
+    //console.log(key);
 
     if (!colorsMatch(getColorAtPixel(currentX, currentY), targetColor)) continue;
 
