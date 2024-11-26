@@ -130,11 +130,27 @@ let frame = 0;
 let score = 0;
 let gameOver = false;
 
-// Bird drawing
 function drawBird() {
+  ctx.save();
+  const birdX = 50; // Fixed x position for the bird
+  let rotation;
+
+  if (birdVelocity < 0) {
+    
+    rotation = Math.max(birdVelocity / 5, -5); // Adjust divisor and limit for upward
+  } else {
+    
+    rotation = Math.min(birdVelocity / 10, 50); // Adjust divisor and limit for downward
+  }
+
+  ctx.translate(birdX + birdWidth / 2, birdY + birdHeight / 2);
+  ctx.rotate(rotation);
   ctx.fillStyle = '#FF0';
-  ctx.fillRect(50, birdY, birdWidth, birdHeight);
+  ctx.fillRect(-birdWidth / 2, -birdHeight / 2, birdWidth, birdHeight);
+
+  ctx.restore();
 }
+
 
 // Handle bird physics
 function updateBird() {
