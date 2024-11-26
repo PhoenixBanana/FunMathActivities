@@ -51,3 +51,19 @@ h4 {
     height: 50px;
     background-color: orange;
 }
+
+#artCanvas { border: 4px solid black; }
+.palette { display: flex; margin: 10px 0; }
+.color { width: 30px; height: 30px; cursor: pointer; margin: 0 5px; }
+
+#paintBucket {
+    background-color: darkgray;
+}
+
+#pencil {
+    background-color: darkorange;
+}
+
+#news {
+    color: orchid;
+}
