@@ -3,6 +3,10 @@
     cursor: help;
 }  
 
+#announcement {
+    color: #00AA00;
+}
+
 body {
     background-color: lavender;
     font-family: "Rubik Glitch", sans-serif;
@@ -11,8 +15,8 @@ body {
   #gameCanvas {
     border-width: 8px;
     border-style: solid;
-    border-color: orangered;
-    background-color: darkorange;
+    border-color: white;
+    background-color: darkslateblue;
     cursor: none;
   }
 
@@ -77,14 +81,4 @@ h4 {
 
 #news {
     color: orchid;
-}
-
-#KBOOM {
-    background-color: orangered;
-    width: 250px;
-    height: 250px;
-    cursor: grabbing;
-    border-width: 25px;
-    font-size: 50px;
-    margin: 10px 0;
 }

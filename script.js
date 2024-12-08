@@ -2,28 +2,68 @@ let randomNumber = Math.floor(Math.random() * 100) + 1;
     const textBox = document.getElementById('textBox');
     const checkButton = document.getElementById('checkButton');
     const resultDisplay = document.getElementById('resultDisplay');
-    const clickButton = document.getElementById('clickButton');
-    let clickerScore = 0;
-    const scoreDisplay = document.getElementById('scoreDisplay');
-    let pointsPerClick = 1; 
-    let clickCount = 0;
-    let pointsIncrement = 1;
-    let guessCount = 0;
     const guessDisplay = document.getElementById('guessDisplay');
+    let points = 0;
+  let cps = 0;
+  let cpc = 1;
+  let pointsDisplay = document.getElementById("pointsDisplay");
+  let cpsDisplay = document.getElementById("cpsDisplay");
+  let cpcDisplay = document.getElementById("cpcDisplay");
+  let cpsCost = 10;
+  let cpcCost = 5;
+  let cpsCostDisplay = document.getElementById("cpsCostDisplay");
+  let cpcCostDisplay = document.getElementById("cpcCostDisplay");
+  const cpsButton = document.getElementById("cpsButton");
+  const clickButton = document.getElementById("clickButton");
+  const cpcButton = document.getElementById("cpcButton");
+
+  cpsButton.addEventListener('click', () => {
+  if (points >= cpsCost) {
+    cps++;
+    points = points - cpsCost;
+    cpsCost = cpsCost + 2;
+    cpsDisplay.innerHTML = "CPS: " + cps;
+    cpsCostDisplay.innerHTML = "CPS Costs: " + cpsCost;
+  } else {
+    console.log("Not enough points. CPS maintained.")
+  }
+});
+
+cpcButton.addEventListener('click', () => {
+  if (points >= cpcCost) {
+    cpc++;
+    points = points - cpcCost;
+    cpcCost = cpcCost + 1;
+    cpcDisplay.innerHTML = "CPC: " + cpc;
+    cpcCostDisplay.innerHTML = "CPC Costs: " + cpcCost;
+  } else {
+    console.log("Not enough points. CPC maintained.")
+  }
+})
+
+clickButton.addEventListener('click', () => {
+  points = points + cpc;
+  pointsDisplay.innerHTML = "Points: " + points;
+});
+
+setInterval(() => {
+  points += cps;
+  pointsDisplay.innerHTML = "Points: " + points;
+}, 1000);
 
     function checkJokeAnswer() {
       var answer = document.getElementById("jokeAnswer").value.toLowerCase();
       answer = answer.replace(/\s+/g, " ").replace(/^\s+/, "").replace(/\s+$/, "");
       switch(answer)
       {
-        case "Hampire":
-        case "A Hampire":
+        case "hampire":
+        case "a hampire":
           alert("That's correct! Check back again soon for a new joke/riddle!");
           break;
-        case "What is a hampire":
-        case "What is a hampire?":
-        case "Who is a hampire":
-        case "Who is a hampire?":
+        case "what is a hampire":
+        case "what is a hampire?":
+        case "who is a hampire":
+        case "who is a hampire?":
           alert("This isn't Jeopardy, but I'll allow it. Correct!");
           break;
         case "42":
@@ -87,25 +127,12 @@ let randomNumber = Math.floor(Math.random() * 100) + 1;
       }
     }
 
-    function incrementScore() {
-      clickerScore += pointsPerClick;
-      scoreDisplay.textContent = "Score: " + clickerScore;
-      clickCount++;
-
-      if (clickCount === 10) {
-        pointsPerClick += pointsIncrement;
-        pointsIncrement++;
-        clickCount = 0;
-      }
-    }
-
     function RQFBRedirection() { 
       window.open('https://phoenixbanana.github.io/FloppyBird/'); 
     }
 
     answerButton.addEventListener('click', checkJokeAnswer);
     checkButton.addEventListener('click', checkAnswer);
-    clickButton.addEventListener('click', incrementScore);
     FloppyBirdRedirect.addEventListener('click', RQFBRedirection);
 
     const gameCanvas = document.getElementById('gameCanvas');
@@ -145,7 +172,7 @@ function drawBird() {
   ctx.rotate((rotation * Math.PI) / 180); // Convert degrees to radians
 
   // Draw the bird (centered on the rotated position)
-  ctx.fillStyle = '#FF0';
+  ctx.fillStyle = '#990000';
   ctx.fillRect(-birdWidth / 2, -birdHeight / 2, birdWidth, birdHeight);
 
   ctx.restore();
@@ -185,7 +212,7 @@ function generateObstacles() {
 
 // Draw obstacles
 function drawObstacles() {
-  ctx.fillStyle = '#964B00';
+  ctx.fillStyle = '#AFEEEE';
   obstacles.forEach((obstacle) => {
     ctx.fillRect(obstacle.x, 0, OBSTACLE_WIDTH, obstacle.gapY); // Top pipe
     ctx.fillRect(

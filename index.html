@@ -15,8 +15,8 @@
 </head>
 
 <body>
-  <h3>WINTER MEGA-UPDATE! Progress: 2/3</h3>
-  <p id="news">Site news: As fall comes to close, Thanksgiving week passes, and it gets too cold to go outside, keep your mind stimulated and express your creativity with the new pixel art canvas! With 27 unique colors and 7,500 individual pixels, this canvas is perfect for doodles, sketches, and whatever fun illustrations you wish to create! Happy painting!</p>
+  <h3 id="announcement">Happy holidays!</h3>
+  <p id="news">Fall is officially in our rear-view mirrors as we plunge into the snow of winter! The crisp air has been replaced with frosty winds, and the golden leaves have given way to a blanket of white. Lights twinkle from every corner, and the scent of pine and cocoa fills the air. It's a season of cozy evenings, festive cheer, and exciting updates, like Floppy Bird's frosty redecoration with icy columns within the shivering caverns, or the Clickers's fresh revamp filled with fabulous upgrades. So get your gloves, bake some cookies, and dive into these winter relaxations!</p>
   <h1>A website by Phoenix Banana</h1>
   <h2>By a nerd, for some nerds!</h2>
   <p id="joke">What do you call a vampire pig?</p>
@@ -28,8 +28,16 @@
   <p id="guessDisplay">Guesses: 0</p>
   <p>Average amount of guesses: 7</p>
   <h4>Click this button to earn points! (Points gained per click increased every ten clicks)</h4>
-  <button id="clickButton">Tap tap tap!</button>
-  <p id="scoreDisplay">Score: 0</p>
+  <button id="clickButton"></button>
+  <p id="pointsDisplay"></p>
+  <p id="cpsDisplay"></p>
+  <p id="cpcDisplay"></p>
+  <p id="cpsCostDisplay"></p>
+  <p id="cpcCostDisplay"></p>
+  <div>
+    <button id="cpsButton">Buy more CPS</button>
+    <button id="cpcButton">Buy more CPC</button>
+  </div>
   <h4>Click on this Floppy Bird game window to play</h4>
   <canvas id="gameCanvas" width="320" height="480"></canvas> 
   <button id="FloppyBirdRedirect">Go to Rage-Quit Floppy Bird!</button>
@@ -66,9 +74,6 @@
   </div>
   <button id="paintBucket">Paint Bucket</button>
   <button id="pencil">Pencil</button>
-<div>
-  <button id="KBOOM">KBOOM</button>
-</div>
   <script src="script.js"></script>
 </body>
 
