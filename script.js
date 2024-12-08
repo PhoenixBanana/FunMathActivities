@@ -1,4 +1,5 @@
-let randomNumber = Math.floor(Math.random() * 100) + 1;
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
+    let guessCount = 0;
     const textBox = document.getElementById('textBox');
     const checkButton = document.getElementById('checkButton');
     const resultDisplay = document.getElementById('resultDisplay');
