@@ -75,7 +75,7 @@ setInterval(() => {
         case "rizz":
         case "gyatt":
         case "fortnite":
-          alert("Stay away from me and my family.");
+          alert("no. do not.");
           break;
         case "bill cipher":
         case "cipher":
