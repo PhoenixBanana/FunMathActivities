@@ -1,9 +1,26 @@
-
+<!DOCTYPE html>
 <html>
     <head>
-        <title>Hello World</title>       
+        <title>Clicker Subpage</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Rubik+Glitch&display=swap" rel="stylesheet">
+        <link href="../site.css" rel="stylesheet" type="text/css" />
+        <link href="style.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Click this button to earn points! (Points gained per click increased every ten clicks)</h1>
+        <button id="clickButton">Click click click!</button>
+        <h3 id="pointsDisplay"></h3>
+        <h3 id="cpsDisplay">Points per second: 0</h3>
+        <h3 id="cpcDisplay">Points per click: 0</h3>
+        <h3 id="cpsCostDisplay">Buying PPS will cost 10 points.</h3>
+        <h3 id="cpcCostDisplay">Buying PPC will cost 5 points.</h3>
+        <div>
+            <button id="cpsButton">UPGRADE: Points per second</button>
+            <button id="cpcButton">UPGRADE: Points per click</button>
+        </div>
+        <script src="script.js"></script>
     </body>
 </html>

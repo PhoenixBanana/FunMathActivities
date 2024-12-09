@@ -1,0 +1,7 @@
+#clickButton {
+    width: 150px;
+    height: 150px;
+    font-size: 25px;
+    background-color: #f00;
+    cursor: cell;
+}
