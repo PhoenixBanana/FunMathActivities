@@ -91,14 +91,6 @@ setInterval(() => {
         case "37":
           alert("Really?");
           break;
-        case "fuck":
-        case "shit":
-        case "bitch":
-        case "ass":
-        case "dick":
-        case "bastard":
-          alert("That is highly inappropriate. Please think twice or even thrice before saying such terrible things, you wouldn't talk to your kind, loving mother that way, so don't talk that way to others, or yourself.");
-          break;
         case "five nights at freddy's":
         case "fnaf":
           alert("Fazbear Ent. established 1983");
