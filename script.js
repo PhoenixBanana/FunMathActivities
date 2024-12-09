@@ -52,21 +52,38 @@ setInterval(() => {
   pointsDisplay.innerHTML = "Points: " + points;
 }, 1000);
 
-    function checkJokeAnswer() {
+  // Precomputed SHA-256 hash for the answer (lowercase)
+  // You can generate this beforehand using a trusted tool.
+  // For example: echo -n "paris" | sha256sum
+  //   Result (without trailing spaces):
+  //   "609cdb3c03dcb1c44d86cb97aadcc4ab4ff9f8fc7a3f1a942bd2f5472db3fd47"
+  // Or just open the debug console in VSCode locally and run hashText("paris")
+  const correctAnswerHash = "29938005928c86bd29bd4f28a8555e35cb7731e0950f6f1f40c6e7dc643732f4";
+
+    // A helper function to hash a text string using SHA-256 and return the hex digest
+    async function hashText(text) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(text);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        return hashHex;
+    }
+
+    async function checkJokeAnswer() {
       var answer = document.getElementById("jokeAnswer").value.toLowerCase();
       answer = answer.replace(/\s+/g, " ").replace(/^\s+/, "").replace(/\s+$/, "");
+      const userAnswerHash = await hashText(answer);
+
+      if (userAnswerHash === correctAnswerHash)
+      {
+        alert("That's correct! Check back again soon for a new joke/riddle!");
+        return;
+      }
+
+      // They didn't get the answer, so we can do some fun easter egg checks here...
       switch(answer)
       {
-        case "hampire":
-        case "a hampire":
-          alert("That's correct! Check back again soon for a new joke/riddle!");
-          break;
-        case "what is a hampire":
-        case "what is a hampire?":
-        case "who is a hampire":
-        case "who is a hampire?":
-          alert("This isn't Jeopardy, but I'll allow it. Correct!");
-          break;
         case "42":
           alert("Hitch-hiker's Guide To The Galaxy?");
           break;
