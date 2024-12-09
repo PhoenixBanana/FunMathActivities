@@ -4,7 +4,6 @@ const textBox = document.getElementById('textBox');
 const checkButton = document.getElementById('checkButton');
 const resultDisplay = document.getElementById('resultDisplay');
 const guessDisplay = document.getElementById('guessDisplay');
-alert("Running here 1");
 
 // Precomputed SHA-256 hash for the answer (lowercase)
 // You can generate this beforehand using a trusted tool.
