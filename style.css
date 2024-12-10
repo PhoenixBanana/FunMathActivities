@@ -7,14 +7,6 @@
     color: #00AA00;
 }
 
-#gameCanvas {
-    border-width: 8px;
-    border-style: solid;
-    border-color: white;
-    background-color: darkslateblue;
-    cursor: none;
-}
-
 #clickButton {
     width: 150px;
     height: 150px;

@@ -1,0 +1,7 @@
+#gameCanvas {
+    border-width: 8px;
+    border-style: solid;
+    border-color: white;
+    background-color: darkslateblue;
+    cursor: none;
+}
