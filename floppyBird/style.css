@@ -1,7 +1,16 @@
 #gameCanvas {
+    width: 25%;
+    height: 25%;
     border-width: 8px;
     border-style: solid;
     border-color: white;
     background-color: darkslateblue;
     cursor: none;
+}
+
+#FloppyBirdRedirect {
+    width: 10%;
+    height: 10%;
+    background-color: orange;
+    cursor: pointer;
 }
