@@ -6,7 +6,7 @@
   const FLAP_STRENGTH = -2.5;
   const SPAWN_RATE = 100; // frames
   const OBSTACLE_WIDTH = 50;
-  const OBSTACLE_SPACING = 200;
+  const OBSTACLE_SPACING = 400;
   
   // Game state variables
   let birdY = gameCanvas.height / 2;
