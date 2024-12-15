@@ -4,7 +4,7 @@
   // Game settings
   const GRAVITY = 0.125;
   const FLAP_STRENGTH = -2.5;
-  const SPAWN_RATE = 750; // frames
+  const SPAWN_RATE = 500; // frames
   const OBSTACLE_WIDTH = 50;
   const OBSTACLE_SPACING = 200;
   
