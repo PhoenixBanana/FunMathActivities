@@ -65,7 +65,7 @@
       obstacles.push({ x: gameCanvas.width, gapY: gapY });
     }
     obstacles.forEach((obstacle, index) => {
-      obstacle.x -= 0.5; // Move obstacle left
+      obstacle.x -= 0.25; // Move obstacle left
       if (obstacle.x + OBSTACLE_WIDTH < 0) {
         obstacles.splice(index, 1); // Remove off-screen obstacles
         score++; // Increment score for passing an obstacle
