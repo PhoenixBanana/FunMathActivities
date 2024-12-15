@@ -2,8 +2,8 @@
   const ctx = gameCanvas.getContext('2d');
   
   // Game settings
-  const GRAVITY = 0.25;
-  const FLAP_STRENGTH = -5;
+  const GRAVITY = 0.125;
+  const FLAP_STRENGTH = -2.5;
   const SPAWN_RATE = 100; // frames
   const OBSTACLE_WIDTH = 50;
   const OBSTACLE_SPACING = 200;
