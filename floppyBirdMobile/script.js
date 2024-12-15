@@ -4,7 +4,7 @@
   // Game settings
   const GRAVITY = 0.125;
   const FLAP_STRENGTH = -2.5;
-  const SPAWN_RATE = 100; // frames
+  const SPAWN_RATE = 750; // frames
   const OBSTACLE_WIDTH = 50;
   const OBSTACLE_SPACING = 200;
   
@@ -65,7 +65,7 @@
       obstacles.push({ x: gameCanvas.width, gapY: gapY });
     }
     obstacles.forEach((obstacle, index) => {
-      obstacle.x -= 3; // Move obstacle left
+      obstacle.x -= 1; // Move obstacle left
       if (obstacle.x + OBSTACLE_WIDTH < 0) {
         obstacles.splice(index, 1); // Remove off-screen obstacles
         score++; // Increment score for passing an obstacle
