@@ -18,6 +18,7 @@
   let obstacles = [];
   let frame = 0;
   let score = 0;
+  let highScore = 0;
   let gameOver = false;
   let gameStarted = false; // Ensures game starts only after the first click
   
@@ -69,6 +70,9 @@
       if (obstacle.x + OBSTACLE_WIDTH < 0) {
         obstacles.splice(index, 1); // Remove off-screen obstacles
         score++; // Increment score for passing an obstacle
+        if (score > highScore) {
+          highScore++;
+        }
       }
     });
   }
@@ -104,6 +108,12 @@
     ctx.font = '16px Arial';
     ctx.fillText('Score: ' + score, 10, 20);
   }
+
+  function drawHighScore() {
+    ctx.fillStyle = '#fff';
+    ctx.font = '16px Roboto Mono'
+    ctx.fillText('High Score: ' + highScore, 150, 20);
+  }
   
   // Reset game
   function resetGame() {
@@ -134,9 +144,11 @@
       // Display "Game Over" message
       ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
       ctx.fillRect(0, gameCanvas.height / 2 - 30, gameCanvas.width, 60);
-      ctx.fillStyle = '#FFF';
-      ctx.font = '30px Arial';
+      ctx.fillStyle = '#F00';
+      ctx.font = '20px Arial';
       ctx.fillText('Game Over', gameCanvas.width / 2 - 80, gameCanvas.height / 2);
+      ctx.fillStyle = '#FFF'
+      ctx.fillText('High Score: ' + highScore, gameCanvas.width / 2 - 80, gameCanvas.height / 2 + 20, 150,);
       return;
     }
   
@@ -146,6 +158,7 @@
     drawBird();
     drawObstacles();
     drawScore();
+    drawHighScore();
     checkCollisions();
   
     requestAnimationFrame(update);
@@ -164,4 +177,4 @@
   });
   
   // Initial call to draw the start screen
-  update();
+update();

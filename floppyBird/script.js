@@ -1,9 +1,3 @@
-function RQFBRedirection() { 
-    window.open('https://phoenixbanana.github.io/FloppyBird/'); 
-  }
-
-  FloppyBirdRedirect.addEventListener('click', RQFBRedirection);
-
   const gameCanvas = document.getElementById('gameCanvas');
   const ctx = gameCanvas.getContext('2d');
   
