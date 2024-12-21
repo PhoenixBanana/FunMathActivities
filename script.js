@@ -7,9 +7,13 @@ const guessDisplay = document.getElementById('guessDisplay');
 
 // Precomputed SHA-256 hash for the answer (lowercase)
 // You can generate this beforehand using a trusted tool.
-//   Result (without trailing spaces):
-//   "609cdb3c03dcb1c44d86cb97aadcc4ab4ff9f8fc7a3f1a942bd2f5472db3fd47"
-const correctAnswerHash = "29938005928c86bd29bd4f28a8555e35cb7731e0950f6f1f40c6e7dc643732f4";
+// Simplest is to:
+//  1. Start debugging
+//  2. Go to the DEBUG CONSOLE
+//  3. Type this:
+//      hashText(cleanText("StringYouWantToHash"))
+//  4. Copy the text here without any trailing spaces:
+const correctAnswerHash = "6c98cbb745793d0a5cdb0a7c7477892ba25f7f246109c44b437904f3f7c882e8";
 
 // A helper function to hash a text string using SHA-256 and return the hex digest
 async function hashText(text) {
@@ -21,9 +25,14 @@ async function hashText(text) {
   return hashHex;
 }
 
+function cleanText(text) {
+  var cleaned = text.toLowerCase();
+  cleaned = cleaned.replace(/\s+/g, " ").replace(/^\s+/, "").replace(/\s+$/, "");
+  return cleaned;
+}
+
 async function checkJokeAnswer() {
-  var answer = document.getElementById("jokeAnswer").value.toLowerCase();
-  answer = answer.replace(/\s+/g, " ").replace(/^\s+/, "").replace(/\s+$/, "");
+  var answer = cleanText(document.getElementById("jokeAnswer").value);
   const userAnswerHash = await hashText(answer);
 
   if (userAnswerHash === correctAnswerHash)
