@@ -1,7 +1,8 @@
 let randomNumber = Math.floor(Math.random() * 100) + 1;
 let guessCount = 0;
-const textBox = document.getElementById('textBox');
+const jokeAnswer = document.getElementById('jokeAnswer');
 const checkButton = document.getElementById('checkButton');
+const guessBox = document.getElementById('guessBox');
 const resultDisplay = document.getElementById('resultDisplay');
 const guessDisplay = document.getElementById('guessDisplay');
 
@@ -78,6 +79,9 @@ async function checkJokeAnswer() {
     case "1983":
       alert("Wasn't there some game about a certain franchise established this year?");
       break;
+    case "cheese":
+      alert("Bruh, why?");
+      break;
     default:
       alert("No, that's not it. Keep trying!");
   }
@@ -100,3 +104,17 @@ function checkAnswer() {
 
 answerButton.addEventListener('click', checkJokeAnswer);
 checkButton.addEventListener('click', checkAnswer);
+jokeAnswer.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    checkJokeAnswer();
+  }
+});
+
+guessBox.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    checkAnswer();
+  }
+});
+
+document.addEventListener('keypress', (event) => { 
+  console.log(`Key "${event.key}" pressed [event: keypress]`)});
