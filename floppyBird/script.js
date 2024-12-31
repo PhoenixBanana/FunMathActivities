@@ -143,12 +143,13 @@ function update() {
   if (gameOver) {
     // Display "Game Over" message
     ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-    ctx.fillRect(0, gameCanvas.height / 2 - 30, gameCanvas.width, 60);
+    ctx.fillRect(0, gameCanvas.height / 2 - 30, gameCanvas.width, 100);
     ctx.fillStyle = '#F00';
     ctx.font = '20px Arial';
-    ctx.fillText('Game Over', gameCanvas.width / 2 - 80, gameCanvas.height / 2);
+    ctx.fillText('Game Over', gameCanvas.width / 2 - 80, gameCanvas.height / 2, 150);
     ctx.fillStyle = '#FFF'
-    ctx.fillText('High Score: ' + highScore, gameCanvas.width / 2 - 80, gameCanvas.height / 2 + 20, 150,);
+    ctx.fillText('Score: ' + score, gameCanvas.width / 2 - 80, gameCanvas.height / 2 + 30, 150)
+    ctx.fillText('High Score: ' + highScore, gameCanvas.width / 2 - 80, gameCanvas.height / 2 + 60, 150);
     return;
   }
 
