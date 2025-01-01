@@ -14,7 +14,7 @@ const guessDisplay = document.getElementById('guessDisplay');
 //  3. Type this:
 //      hashText(cleanText("StringYouWantToHash"))
 //  4. Copy the text here without any trailing spaces:
-const correctAnswerHash = "6c98cbb745793d0a5cdb0a7c7477892ba25f7f246109c44b437904f3f7c882e8";
+const correctAnswerHash = "730551f5bad4af0604f661e7f8b82e6a6c364ca19ce140166333d86cdc814ca6";
 
 // A helper function to hash a text string using SHA-256 and return the hex digest
 async function hashText(text) {
@@ -33,7 +33,13 @@ function cleanText(text) {
 }
 
 async function checkJokeAnswer() {
+  // Get and clean the answer the user provided:
   var answer = cleanText(document.getElementById("jokeAnswer").value);
+
+  // Remove any leading "a " or "the " from the front so you don't get penalized for saying "a bat" instead of "bat":
+  answer = answer.replace(/^(a|the)\s+/, "");
+
+  // Hash the answer so we can compare it to our precomputed hash answer:
   const userAnswerHash = await hashText(answer);
 
   if (userAnswerHash === correctAnswerHash)
@@ -80,7 +86,10 @@ async function checkJokeAnswer() {
       alert("Wasn't there some game about a certain franchise established this year?");
       break;
     case "cheese":
-      alert("Bruh, why?");
+      alert("Surya broke my computer.");
+      break;
+    case "surya":
+      alert("Surya Nampali, he broke my computer by mashing all the keys on it. It took me a week just to fix ONE APPLICATION. Surya, if you're reading this: I know where you live.");
       break;
     default:
       alert("No, that's not it. Keep trying!");

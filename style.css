@@ -7,14 +7,6 @@
     color: #00AA00;
 }
 
-#clickButton {
-    width: 150px;
-    height: 150px;
-    font-size: 25px;
-    background-color: #f00;
-    cursor: cell;
-}
-
 #checkButton {
     background-color: lightgreen;
     cursor: pointer;
@@ -26,5 +18,5 @@
 }
 
 #news {
-    color: red;
+    color: rgb(255, 70, 100);
 }
