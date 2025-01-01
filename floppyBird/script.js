@@ -177,5 +177,18 @@ gameCanvas.addEventListener('click', () => {
   }
 });
 
+document.addEventListener('keydown', function(event) {
+  if (event.key === ' ') {
+    if (!gameStarted) {
+      gameStarted = true;
+      update();
+    } else if (gameOver) {
+      resetGame();
+    } else {
+      birdFlap = true;
+    }
+  }
+});
+
 // Initial call to draw the start screen
 update();
