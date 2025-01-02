@@ -16,7 +16,7 @@ let points = 0;
   if (points >= cpsCost) {
     cps++;
     points = points - cpsCost;
-    cpsCost = cpsCost * 2;
+    cpsCost = cpsCost + 10;
     cpsDisplay.innerHTML = "Points per second: " + cps;
     cpsCostDisplay.innerHTML = "Buying more PPS will cost " + cpsCost + " points.";
   } else {
@@ -30,7 +30,7 @@ cpcButton.addEventListener('click', () => {
     points = points - cpcCost;
     cpcCost = cpcCost + 5;
     cpcDisplay.innerHTML = "Points per click: " + cpc;
-    cpcCostDisplay.innerHTML = "Buying PPC will cost " + cpcCost + " points.";
+    cpcCostDisplay.innerHTML = "Buying more PPC will cost " + cpcCost + " points.";
   } else {
     console.log("Not enough points. CPC maintained.")
   }
@@ -39,6 +39,13 @@ cpcButton.addEventListener('click', () => {
 clickButton.addEventListener('click', () => {
   points = points + cpc;
   pointsDisplay.innerHTML = "Points: " + points;
+});
+
+document.addEventListener('keydown', function(event) {
+  if (event.key === ' ') {
+    points = points + cpc;
+    pointsDisplay.innerHTML = "Points: " + points;
+  }
 });
 
 setInterval(() => {
