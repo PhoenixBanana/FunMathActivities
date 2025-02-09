@@ -72,6 +72,7 @@ function generateObstacles() {
       score++; // Increment score for passing an obstacle
       if (score > highScore) {
         highScore++;
+        localStorage.setItem('highScore', highScore);
       }
     }
   });
@@ -190,5 +191,13 @@ document.addEventListener('keydown', function(event) {
   }
 });
 
+function loadHighScore() {
+  let storedHighScore = localStorage.getItem('highScore');
+  if (storedHighScore) {
+    highScore = parseInt(storedHighScore, 10);
+  }
+}
+
+loadHighScore();
 // Initial call to draw the start screen
 update();

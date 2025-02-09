@@ -14,7 +14,7 @@ const guessDisplay = document.getElementById('guessDisplay');
 //  3. Type this:
 //      hashText(cleanText("StringYouWantToHash"))
 //  4. Copy the text here without any trailing spaces:
-const correctAnswerHash = "730551f5bad4af0604f661e7f8b82e6a6c364ca19ce140166333d86cdc814ca6";
+const correctAnswerHash = "5152790e278eb89039f8bfaa354b944ec1b44c5d3fc144edc5720c3edc045c73";
 
 // A helper function to hash a text string using SHA-256 and return the hex digest
 async function hashText(text) {
