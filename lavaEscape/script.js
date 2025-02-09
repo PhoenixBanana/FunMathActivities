@@ -195,9 +195,10 @@ function draw() {
     ctx.fillStyle = '#000';
     ctx.font = '48px sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('Lava Leap', canvas.width / 2, canvas.height / 2 - 50);
+    ctx.fillText('Lava Escape', canvas.width / 2, canvas.height / 2 - 50);
     ctx.font = '24px sans-serif';
     ctx.fillText('Press Enter to Start', canvas.width / 2, canvas.height / 2);
+    ctx.fillText('Arrow keys to move', canvas.width / 2, canvas.height / 2 + 50)
   } else if (gameState === 'playing') {
     let elapsedTime = (Date.now() - gameStartTime) / 1000;
 
