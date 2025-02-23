@@ -18,7 +18,7 @@ let birdHeight = 15;
 let obstacles = [];
 let frame = 0;
 let score = 0;
-let highScore = 0;
+let FloppyBirdHighScore = 0;
 let gameOver = false;
 let gameStarted = false; // Ensures game starts only after the first click
 
@@ -70,9 +70,9 @@ function generateObstacles() {
     if (obstacle.x + OBSTACLE_WIDTH < 0) {
       obstacles.splice(index, 1); // Remove off-screen obstacles
       score++; // Increment score for passing an obstacle
-      if (score > highScore) {
-        highScore++;
-        localStorage.setItem('highScore', highScore);
+      if (score > FloppyBirdHighScore) {
+        FloppyBirdHighScore++;
+        localStorage.setItem('FloppyBirdHighScore', FloppyBirdHighScore);
       }
     }
   });
@@ -113,7 +113,7 @@ function drawScore() {
 function drawHighScore() {
 ctx.fillStyle = '#fff';
 ctx.font = '16px Roboto Mono'
-ctx.fillText('High Score: ' + highScore, 150, 20);
+ctx.fillText('High Score: ' + FloppyBirdHighScore, 150, 20);
 }
 
 // Reset game
@@ -150,7 +150,7 @@ function update() {
     ctx.fillText('Game Over', gameCanvas.width / 2 - 80, gameCanvas.height / 2, 150);
     ctx.fillStyle = '#FFF'
     ctx.fillText('Score: ' + score, gameCanvas.width / 2 - 80, gameCanvas.height / 2 + 30, 150)
-    ctx.fillText('High Score: ' + highScore, gameCanvas.width / 2 - 80, gameCanvas.height / 2 + 60, 150);
+    ctx.fillText('High Score: ' + FloppyBirdHighScore, gameCanvas.width / 2 - 80, gameCanvas.height / 2 + 60, 150);
     return;
   }
 
@@ -192,9 +192,9 @@ document.addEventListener('keydown', function(event) {
 });
 
 function loadHighScore() {
-  let storedHighScore = localStorage.getItem('highScore');
+  let storedHighScore = localStorage.getItem('FloppyBirdHighScore');
   if (storedHighScore) {
-    highScore = parseInt(storedHighScore, 10);
+    FloppyBirdHighScore = parseInt(storedHighScore, 10);
   }
 }
 

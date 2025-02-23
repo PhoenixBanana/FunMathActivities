@@ -9,7 +9,7 @@ let gameState = 'start';
 
 // Game variables for score tracking
 let score = 0;
-let highScore = 0;
+let LavaEscapeHighScore = 0;
 
 // Array to hold platform objects
 let platforms = [];
@@ -45,6 +45,7 @@ const lavaHeight = 50;
 const lavaY = canvas.height - lavaHeight; 
 const safeTime = 15;  // Duration (in seconds) before ground turns into lava
 let gameStartTime = 0; 
+let lastPlatformSpawnTime = 0;
 
 /**
  * Clamps a value between a min and max.
@@ -54,21 +55,12 @@ function clamp(value, min, max) {
 }
 
 /**
- * Initializes platforms with controlled horizontal spacing.
+ * Initializes platforms at random X values and a Y value of 50.
  */
 function initPlatforms() {
   platforms = [];
-  let baseX = Math.random() * (canvas.width - platformWidth);
-  let y = canvas.height - 100;
-  platforms.push({ x: baseX, y: y, width: platformWidth, height: platformHeight });
-
-  while (y > -canvas.height) {
-    y -= platformGap;
-    let prevX = platforms[platforms.length - 1].x;
-    let offset = (Math.random() * 2 - 1) * maxHorizontalGap;
-    let newX = clamp(prevX + offset, 0, canvas.width - platformWidth);
-    platforms.push({ x: newX, y: y, width: platformWidth, height: platformHeight });
-  }
+  let x = Math.random() * (canvas.width - platformWidth);
+  platforms.push({ x: x, y: 50, width: platformWidth, height: platformHeight });
 }
 
 /**
@@ -84,6 +76,7 @@ function initGame() {
   
   initPlatforms();
   gameStartTime = Date.now();
+  lastPlatformSpawnTime = Date.now();
 }
 
 /**
@@ -103,6 +96,13 @@ document.addEventListener('keydown', function(e) {
 document.addEventListener('keyup', function(e) {
   keys[e.key] = false;
 });
+
+/**
+ * Saves the high score to local storage.
+ */
+function saveHighScore() {
+  localStorage.setItem('LavaEscapeHighScore', LavaEscapeHighScore);
+}
 
 /**
  * Main game loop.
@@ -142,12 +142,10 @@ function update() {
 
     platforms = platforms.filter(platform => platform.y < canvas.height);
 
-    while (platforms.length < Math.ceil(canvas.height / platformGap) + 1) {
-      let newY = platforms.length > 0 ? platforms[0].y - platformGap : -platformGap;
-      let prevX = platforms.length > 0 ? platforms[0].x : Math.random() * (canvas.width - platformWidth);
-      let offset = (Math.random() * 2 - 1) * maxHorizontalGap;
-      let newX = clamp(prevX + offset, 0, canvas.width - platformWidth);
-      platforms.unshift({ x: newX, y: newY, width: platformWidth, height: platformHeight });
+    if (Date.now() - lastPlatformSpawnTime > 250) {
+      let x = Math.random() * (canvas.width - platformWidth);
+      platforms.push({ x: x, y: 50, width: platformWidth, height: platformHeight });
+      lastPlatformSpawnTime = Date.now();
     }
 
     player.isOnPlatform = false;
@@ -173,15 +171,15 @@ function update() {
         player.isOnPlatform = true;
       }
     } else {
+      score++;
       if (player.y + player.height > lavaY) {
         gameState = 'gameover';
-        if (score > highScore) {
-          highScore = score;
+        if (score > LavaEscapeHighScore) {
+          LavaEscapeHighScore = score;
+          saveHighScore();
         }
       }
     }
-
-    score += 1;
   }
 }
 
@@ -231,9 +229,18 @@ function draw() {
     ctx.fillText('Game Over', canvas.width / 2, canvas.height / 2 - 50);
     ctx.font = '24px sans-serif';
     ctx.fillText('Score: ' + score, canvas.width / 2, canvas.height / 2);
-    ctx.fillText('High Score: ' + highScore, canvas.width / 2, canvas.height / 2 + 40);
+    ctx.fillText('High Score: ' + LavaEscapeHighScore, canvas.width / 2, canvas.height / 2 + 40);
     ctx.fillText('Press Enter to Restart', canvas.width / 2, canvas.height / 2 + 80);
   }
 }
+
+function loadHighScore() {
+  let storedHighScore = localStorage.getItem('LavaEscapeHighScore');
+  if (storedHighScore) {
+    LavaEscapeHighScore = parseInt(storedHighScore, 10);
+  }
+}
+
+loadHighScore();
 
 gameLoop();
