@@ -5,15 +5,18 @@
   <title>Slot Machine</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎲</text></svg>">
   <!-- Link to the CSS file -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../site.css">
 </head>
 <body>
 <h1>Slot Machine!</h1>
+<p>Payouts: Roll 2 of the same = 2 credits, Roll 3 of the same = 25 credits, Roll 7 three times = 50 credits</p>
+<div><h3 id="creditsDisplay"></h3></div>
 <div id="slotMachine">
     <div class="slot" id="slot1"><h2 id="numDisplay1">0</h2></div>
     <div class="slot" id="slot2"><h2 id="numDisplay2">0</h2></div>
     <div class="slot" id="slot3"><h2 id="numDisplay3">0</h2></div>
 </div>
 <button id="rollBTN" onclick="roll()">Let's Go Gambling!</button>
+<div><input type="number" id="betInput" min="0" max="1000000" placeholder="Bet"></input></div>
 <script src="script.js"></script>
 </body>

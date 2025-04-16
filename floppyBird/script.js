@@ -18,6 +18,8 @@ let birdHeight = 15;
 let obstacles = [];
 let frame = 0;
 let score = 0;
+let scoreCredsInt = 0;
+let credits = localStorage.getItem('Credits');
 let FloppyBirdHighScore = 0;
 let gameOver = false;
 let gameStarted = false; // Ensures game starts only after the first click
@@ -70,6 +72,7 @@ function generateObstacles() {
     if (obstacle.x + OBSTACLE_WIDTH < 0) {
       obstacles.splice(index, 1); // Remove off-screen obstacles
       score++; // Increment score for passing an obstacle
+      scoreCredsInt++;
       if (score > FloppyBirdHighScore) {
         FloppyBirdHighScore++;
         localStorage.setItem('FloppyBirdHighScore', FloppyBirdHighScore);
@@ -155,6 +158,7 @@ function update() {
   }
 
   frame++;
+
   updateBird();
   generateObstacles();
   drawBird();
@@ -164,6 +168,12 @@ function update() {
   checkCollisions();
 
   requestAnimationFrame(update);
+
+  if(scoreCredsInt == 10){
+    scoreCredsInt = 0;
+    credits++;
+    localStorage.setItem('Credits', credits);
+  }
 }
 
 // Event listener for bird flap and game start

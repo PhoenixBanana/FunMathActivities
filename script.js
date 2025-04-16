@@ -5,6 +5,7 @@ const checkButton = document.getElementById('checkButton');
 const guessBox = document.getElementById('guessBox');
 const resultDisplay = document.getElementById('resultDisplay');
 const guessDisplay = document.getElementById('guessDisplay');
+let Credits = 0;
 
 // Precomputed SHA-256 hash for the answer (lowercase)
 // You can generate this beforehand using a trusted tool.
@@ -125,5 +126,18 @@ guessBox.addEventListener('keydown', (event) => {
   }
 });
 
+function loadCredits() {
+  let credits = localStorage.getItem('Credits');
+  if (credits) {
+    Credits = credits;
+  }
+}
+
+loadCredits();
+
 document.addEventListener('keypress', (event) => { 
-  console.log(`Key "${event.key}" pressed [event: keypress]`)});
+  console.log(`Key "${event.key}" pressed [event: keypress]`)
+  console.log(localStorage.getItem('Credits'));
+  localStorage.setItem('Credits', 10);
+  console.log(localStorage.getItem('Credits'));
+});

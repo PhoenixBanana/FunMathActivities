@@ -10,6 +10,8 @@ let gameState = 'start';
 // Game variables for score tracking
 let score = 0;
 let LavaEscapeHighScore = 0;
+let scoreCredsInt = 0;
+let credits = localStorage.getItem('Credits');
 
 // Array to hold platform objects
 let platforms = [];
@@ -172,6 +174,7 @@ function update() {
       }
     } else {
       score++;
+      scoreCredsInt++;
       if (player.y + player.height > lavaY) {
         gameState = 'gameover';
         if (score > LavaEscapeHighScore) {
@@ -180,6 +183,12 @@ function update() {
         }
       }
     }
+  }
+
+  if(scoreCredsInt == 1000){
+    credits++;
+    localStorage.setItem('Credits', credits);
+    scoreCredsInt = 0;
   }
 }
 
