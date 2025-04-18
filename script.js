@@ -138,6 +138,4 @@ loadCredits();
 document.addEventListener('keypress', (event) => { 
   console.log(`Key "${event.key}" pressed [event: keypress]`)
   console.log(localStorage.getItem('Credits'));
-  localStorage.setItem('Credits', 10);
-  console.log(localStorage.getItem('Credits'));
 });
