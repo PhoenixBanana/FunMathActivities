@@ -13,4 +13,4 @@ LE_jumpBoostButton.addEventListener('click', () => {
 LE_lowGravityButton.addEventListener('click', () => {
     LE_lowGravity = 1;
     credits -= 50;
-  }
+})
