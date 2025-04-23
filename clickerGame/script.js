@@ -41,13 +41,6 @@ clickButton.addEventListener('click', () => {
   pointsDisplay.innerHTML = "Points: " + points;
 });
 
-document.addEventListener('keydown', function(event) {
-  if (event.key === ' ') {
-    points = points + cpc;
-    pointsDisplay.innerHTML = "Points: " + points;
-  }
-});
-
 setInterval(() => {
   points += cps;
   pointsDisplay.innerHTML = "Points: " + points;
