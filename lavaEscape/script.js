@@ -12,6 +12,8 @@ let score = 0;
 let LavaEscapeHighScore = 0;
 let scoreCredsInt = 0;
 let credits = localStorage.getItem('Credits');
+let jumpBoost = localStorage.getItem('LE_jumpBoost') || 0;
+let lowGravity = localStorage.getItem('LE_lowGravity') || 0;
 
 // Array to hold platform objects
 let platforms = [];
@@ -32,8 +34,8 @@ const player = {
 };
 
 // Gravity and jump settings
-const gravity = 0.5;       
-const jumpVelocity = -12;  
+const gravity = lowGravity == 1 ? 0.25 : 0.5; // Adjust gravity based on lowGravity setting
+const jumpVelocity = jumpBoost == 1 ? -18 : -13; // Adjust jump velocity based on jumpBoost setting
 
 // Platform settings
 const platformWidth = 100;  
@@ -62,7 +64,9 @@ function clamp(value, min, max) {
 function initPlatforms() {
   platforms = [];
   let x = Math.random() * (canvas.width - platformWidth);
-  platforms.push({ x: x, y: 50, width: platformWidth, height: platformHeight });
+  let spawnY = -platformHeight; // Spawn offscreen
+  platforms.push({ x: x, y: spawnY, width: platformWidth, height: platformHeight });
+
 }
 
 /**

@@ -74,7 +74,7 @@ async function checkJokeAnswer() {
       alert("You gave me up, you let me down, you ran around and deserted me. You made me cry, you said 'Goodbye', you told a lie and hurt me.");
       break;
     case "37":
-      alert("Really?");
+      alert("Really? Huh, ok.");
       break;
     case "five nights at freddy's":
     case "fnaf":
@@ -90,7 +90,7 @@ async function checkJokeAnswer() {
       alert("Surya broke my computer.");
       break;
     case "surya":
-      alert("Surya Nampali, he broke my computer by mashing all the keys on it. It took me a week just to fix ONE APPLICATION. Surya, if you're reading this: I know where you live.");
+      alert("He broke my computer by mashing all the keys on it. It took me a week just to fix ONE APPLICATION. Surya, if you're reading this: I know where you live.");
       break;
     default:
       alert("No, that's not it. Keep trying!");
@@ -138,4 +138,6 @@ loadCredits();
 document.addEventListener('keypress', (event) => { 
   console.log(`Key "${event.key}" pressed [event: keypress]`)
   console.log(localStorage.getItem('Credits'));
+  console.log(localStorage.getItem('LE_jumpBoost'));
+  console.log(localStorage.getItem('LE_lowGravity'));
 });
