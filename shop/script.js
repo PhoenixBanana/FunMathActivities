@@ -9,6 +9,12 @@ let LE_jumpBoost = localStorage.setItem('LE_jumpBoost', 0);
 let FB_invincibility = localStorage.setItem('FB_noHit', 0);
 
 LE_jumpBoostButton.addEventListener('click', () => {
+  if (credits < 10) {
+    alert('Not enough credits!');
+  } else if (localStorage.getItem('LE_jumpBoost') == 1) {
+    alert('Jump Boost already purchased!');
+  } else {
+    alert('Jump Boost purchased!');
     localStorage.setItem('LE_jumpBoost', 1);
     localStorage.setItem('Credits', credits - 10);
     credits = parseInt(localStorage.getItem('Credits')) || 0;
@@ -16,8 +22,16 @@ LE_jumpBoostButton.addEventListener('click', () => {
     console.log('Jump Boost purchased');
     console.log(localStorage.getItem('LE_jumpBoost'));
     console.log(localStorage.getItem('Credits'));
+  }
   });
 LE_lowGravityButton.addEventListener('click', () => {
+    if (credits < 25) {
+        alert('Not enough credits!');
+    } else if (localStorage.getItem('LE_lowGravity') == 1) {
+        alert('Low Gravity already purchased!');
+    } else {
+        alert('Low Gravity purchased!');
+    
     localStorage.setItem('LE_lowGravity', 1);
     localStorage.setItem('Credits', credits - 25);
     credits = parseInt(localStorage.getItem('Credits')) || 0;
@@ -25,4 +39,5 @@ LE_lowGravityButton.addEventListener('click', () => {
     console.log('Low Gravity purchased');
     console.log(localStorage.getItem('LE_lowGravity'));
     console.log(localStorage.getItem('Credits'));
+    }
 })
