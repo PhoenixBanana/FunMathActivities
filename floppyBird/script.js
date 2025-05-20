@@ -38,7 +38,7 @@ function drawBird() {
   ctx.rotate((rotation * Math.PI) / 180); // Convert degrees to radians
 
   // Draw the bird (centered on the rotated position)
-  ctx.fillStyle = '#990000';
+  ctx.fillStyle = '#DD0';
   ctx.fillRect(-birdWidth / 2, -birdHeight / 2, birdWidth, birdHeight);
 
   ctx.restore();
@@ -83,7 +83,7 @@ function generateObstacles() {
 
 // Draw obstacles
 function drawObstacles() {
-  ctx.fillStyle = '#AFEEEE';
+  ctx.fillStyle = '#090';
   obstacles.forEach((obstacle) => {
     ctx.fillRect(obstacle.x, 0, OBSTACLE_WIDTH, obstacle.gapY); // Top pipe
     ctx.fillRect(

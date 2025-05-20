@@ -15,7 +15,7 @@ let Credits = 0;
 //  3. Type this:
 //      hashText(cleanText("StringYouWantToHash"))
 //  4. Copy the text here without any trailing spaces:
-const correctAnswerHash = "5152790e278eb89039f8bfaa354b944ec1b44c5d3fc144edc5720c3edc045c73";
+const correctAnswerHash = "ca5bcec12f716f44d9745d349cc80422f0d14cbab09329caf533bef7c2d952eb";
 
 // A helper function to hash a text string using SHA-256 and return the hex digest
 async function hashText(text) {
@@ -37,7 +37,7 @@ async function checkJokeAnswer() {
   // Get and clean the answer the user provided:
   var answer = cleanText(document.getElementById("jokeAnswer").value);
 
-  // Remove any leading "a " or "the " from the front so you don't get penalized for saying "a bat" instead of "bat":
+  // Remove any leading "a " or "the " from the front so you don't get penalized for saying "a [ANSWER]" instead of "[ANSWER]":
   answer = answer.replace(/^(a|the)\s+/, "");
 
   // Hash the answer so we can compare it to our precomputed hash answer:
@@ -90,7 +90,7 @@ async function checkJokeAnswer() {
       alert("Surya broke my computer.");
       break;
     case "surya":
-      alert("He broke my computer by mashing all the keys on it. It took me a week just to fix ONE APPLICATION. Surya, if you're reading this: I know where you live.");
+      alert("He broke my computer by mashing all the keys on it. Surya, if you're reading this: I know where you live.");
       break;
     default:
       alert("No, that's not it. Keep trying!");
