@@ -1,126 +1,158 @@
 const gameCanvas = document.getElementById('gameCanvas');
 const ctx = gameCanvas.getContext('2d');
 
-// Game settings
-const GRAVITY = 0.075;
-const FLAP_STRENGTH = -2.5;
-const SPAWN_RATE = 200; // frames
+// Game settings (delta-time aware)
+const GRAVITY = 1000; // px/sec^2
+const FLAP_STRENGTH = -300; // px/sec
+const SPAWN_RATE = 1.5; // seconds between spawns
 const OBSTACLE_WIDTH = 50;
-const OBSTACLE_SPACING = 400;
+const OBSTACLE_GAP = 100;
 
-// Game state variables
+// Bird settings
 let birdY = gameCanvas.height / 2;
 let birdVelocity = 0;
 let birdFlap = false;
 let birdWidth = 20;
 let birdHeight = 15;
 
+// Game state
 let obstacles = [];
-let frame = 0;
+let timeSinceLastSpawn = 0;
 let score = 0;
-let highScore = 0;
+let scoreCredsInt = 0;
+let credits = localStorage.getItem('Credits') || 0;
+let FloppyBirdHighScore = 0;
 let gameOver = false;
-let gameStarted = false; // Ensures game starts only after the first click
+let gameStarted = false;
 
-/**
- * Saves the high score to local storage.
- */
-function saveHighScore() {
-  localStorage.setItem('FloppyBirdMobileHighScore', highScore);
+let lastTime = performance.now();
+
+function tick(now) {
+  const dt = (now - lastTime) / 1000; // seconds
+  lastTime = now;
+
+  update(dt);
+  render();
+
+  requestAnimationFrame(tick);
 }
 
-/**
- * Loads the high score from local storage.
- */
-function loadHighScore() {
-  let storedHighScore = localStorage.getItem('FloppyBirdMobileHighScore');
-  if (storedHighScore) {
-    highScore = parseInt(storedHighScore, 10);
+// Update game state
+function update(dt) {
+  if (!gameStarted) return;
+
+  if (gameOver) return;
+
+  updateBird(dt);
+  updateObstacles(dt);
+  checkCollisions();
+
+  if (scoreCredsInt >= 10) {
+    scoreCredsInt = 0;
+    credits++;
+    localStorage.setItem('Credits', credits);
   }
 }
 
-function drawBird() {
-  ctx.save();
-  const birdX = 50; // Fixed x position for the bird
+function render() {
+  ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 
-  // Calculate rotation angle based on velocity
-  let rotation = birdVelocity * 2; // Base rotation proportional to velocity
-  rotation = Math.max(rotation, -90); // Clamp rotation to a minimum of -90° (upward limit)
-  rotation = Math.min(rotation, 90);  // Clamp rotation to a maximum of 90° (downward limit)
+  if (!gameStarted) {
+    ctx.fillStyle = '#FFF';
+    ctx.font = '20px Arial';
+    ctx.fillText('Click or Space to Start', gameCanvas.width / 2 - 80, gameCanvas.height / 2);
+    return;
+  }
 
-  // Translate and rotate the canvas to simulate bird rotation
-  ctx.translate(birdX + birdWidth / 2, birdY + birdHeight / 2);
-  ctx.rotate((rotation * Math.PI) / 180); // Convert degrees to radians
+  drawBird();
+  drawObstacles();
+  drawScore();
+  drawHighScore();
 
-  // Draw the bird (centered on the rotated position)
-  ctx.fillStyle = '#990000';
-  ctx.fillRect(-birdWidth / 2, -birdHeight / 2, birdWidth, birdHeight);
-
-  ctx.restore();
+  if (gameOver) {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    ctx.fillRect(0, gameCanvas.height / 2 - 30, gameCanvas.width, 100);
+    ctx.fillStyle = '#F00';
+    ctx.font = '20px Arial';
+    ctx.fillText('Game Over', gameCanvas.width / 2 - 80, gameCanvas.height / 2);
+    ctx.fillStyle = '#FFF';
+    ctx.fillText('Score: ' + score, gameCanvas.width / 2 - 80, gameCanvas.height / 2 + 30);
+    ctx.fillText('High Score: ' + FloppyBirdHighScore, gameCanvas.width / 2 - 80, gameCanvas.height / 2 + 60);
+  }
 }
 
-
-// Update bird physics
-function updateBird() {
+// Bird physics
+function updateBird(dt) {
   if (birdFlap) {
     birdVelocity = FLAP_STRENGTH;
     birdFlap = false;
   }
-  birdVelocity += GRAVITY;
-  birdY += birdVelocity;
+  birdVelocity += GRAVITY * dt;
+  birdY += birdVelocity * dt;
 
-  if (birdY < 0) birdY = 0; // Prevent bird from going off the top
+  if (birdY < 0) birdY = 0;
   if (birdY + birdHeight > gameCanvas.height) {
     birdY = gameCanvas.height - birdHeight;
     gameOver = true;
   }
 }
 
-// Generate obstacles
-function generateObstacles() {
-  if (frame % SPAWN_RATE === 0 && !gameOver) {
-    let gapY = Math.random() * (gameCanvas.height - OBSTACLE_SPACING);
+function drawBird() {
+  ctx.save();
+  const birdX = 50;
+  let rotation = birdVelocity * 0.1;
+  rotation = Math.max(Math.min(rotation, 90), -90);
+
+  ctx.translate(birdX + birdWidth / 2, birdY + birdHeight / 2);
+  ctx.rotate((rotation * Math.PI) / 180);
+  ctx.fillStyle = '#DD0';
+  ctx.fillRect(-birdWidth / 2, -birdHeight / 2, birdWidth, birdHeight);
+  ctx.restore();
+}
+
+// Obstacles
+function updateObstacles(dt) {
+  timeSinceLastSpawn += dt;
+  if (timeSinceLastSpawn >= SPAWN_RATE) {
+    timeSinceLastSpawn = 0;
+    const gapY = Math.random() * (gameCanvas.height - OBSTACLE_GAP);
     obstacles.push({ x: gameCanvas.width, gapY: gapY });
   }
-  obstacles.forEach((obstacle, index) => {
-    obstacle.x -= 1.5; // Move obstacle left
-    if (obstacle.x + OBSTACLE_WIDTH < 0) {
-      obstacles.splice(index, 1); // Remove off-screen obstacles
-      score++; // Increment score for passing an obstacle
-      if (score > highScore) {
-        highScore = score;
-        saveHighScore();
+
+  for (let i = obstacles.length - 1; i >= 0; i--) {
+    obstacles[i].x -= 200 * dt;
+    if (obstacles[i].x + OBSTACLE_WIDTH < 0) {
+      obstacles.splice(i, 1);
+      score++;
+      scoreCredsInt++;
+      if (score > FloppyBirdHighScore) {
+        FloppyBirdHighScore = score;
+        localStorage.setItem('FloppyBirdHighScore', FloppyBirdHighScore);
       }
     }
-  });
+  }
 }
 
-// Draw obstacles
 function drawObstacles() {
-  ctx.fillStyle = '#AFEEEE';
-  obstacles.forEach((obstacle) => {
-    ctx.fillRect(obstacle.x, 0, OBSTACLE_WIDTH, obstacle.gapY); // Top pipe
-    ctx.fillRect(
-      obstacle.x,
-      obstacle.gapY + 100,
-      OBSTACLE_WIDTH,
-      gameCanvas.height - obstacle.gapY - 100
-    ); // Bottom pipe
+  ctx.fillStyle = '#090';
+  obstacles.forEach((ob) => {
+    ctx.fillRect(ob.x, 0, OBSTACLE_WIDTH, ob.gapY);
+    ctx.fillRect(ob.x, ob.gapY + OBSTACLE_GAP, OBSTACLE_WIDTH, gameCanvas.height - ob.gapY - OBSTACLE_GAP);
   });
 }
 
-// Check collisions
+// Collision detection
 function checkCollisions() {
-  obstacles.forEach((obstacle) => {
-    if (50 + birdWidth > obstacle.x && 50 < obstacle.x + OBSTACLE_WIDTH) {
-      if (birdY < obstacle.gapY || birdY + birdHeight > obstacle.gapY + 100) {
+  obstacles.forEach((ob) => {
+    if (50 + birdWidth > ob.x && 50 < ob.x + OBSTACLE_WIDTH) {
+      if (birdY < ob.gapY || birdY + birdHeight > ob.gapY + OBSTACLE_GAP) {
         gameOver = true;
       }
     }
   });
 }
 
-// Draw score
+// Score
 function drawScore() {
   ctx.fillStyle = '#fff';
   ctx.font = '16px Arial';
@@ -129,64 +161,26 @@ function drawScore() {
 
 function drawHighScore() {
   ctx.fillStyle = '#fff';
-  ctx.font = '16px Roboto Mono'
-  ctx.fillText('High Score: ' + highScore, 150, 20);
+  ctx.font = '16px Roboto Mono';
+  ctx.fillText('High Score: ' + FloppyBirdHighScore, 150, 20);
 }
 
-// Reset game
 function resetGame() {
   birdY = gameCanvas.height / 2;
   birdVelocity = 0;
   birdFlap = false;
   obstacles = [];
-  frame = 0;
+  timeSinceLastSpawn = 0;
   score = 0;
   gameOver = false;
-  gameStarted = false;
-  update();
 }
 
-// Update game state
-function update() {
-  ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-
-  if (!gameStarted) {
-    // Display "Click to Start" message
-    ctx.fillStyle = '#FFF';
-    ctx.font = '20px Arial';
-    ctx.fillText('Click to Start', gameCanvas.width / 2 - 60, gameCanvas.height / 2);
-    return;
-  }
-
-  if (gameOver) {
-    // Display "Game Over" message
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-    ctx.fillRect(0, gameCanvas.height / 2 - 30, gameCanvas.width, 60);
-    ctx.fillStyle = '#F00';
-    ctx.font = '20px Arial';
-    ctx.fillText('Game Over', gameCanvas.width / 2 - 80, gameCanvas.height / 2);
-    ctx.fillStyle = '#FFF'
-    ctx.fillText('High Score: ' + highScore, gameCanvas.width / 2 - 80, gameCanvas.height / 2 + 20, 150,);
-    return;
-  }
-
-  frame++;
-  updateBird();
-  generateObstacles();
-  drawBird();
-  drawObstacles();
-  drawScore();
-  drawHighScore();
-  checkCollisions();
-
-  requestAnimationFrame(update);
-}
-
-// Event listener for bird flap and game start
+// Event listeners
 gameCanvas.addEventListener('click', () => {
   if (!gameStarted) {
     gameStarted = true;
-    update();
+    lastTime = performance.now();
+    requestAnimationFrame(tick);
   } else if (gameOver) {
     resetGame();
   } else {
@@ -194,8 +188,24 @@ gameCanvas.addEventListener('click', () => {
   }
 });
 
-// Initial call to load the high score
-loadHighScore();
+document.addEventListener('keydown', (e) => {
+  if (e.key === ' ') {
+    if (!gameStarted) {
+      gameStarted = true;
+      lastTime = performance.now();
+      requestAnimationFrame(tick);
+    } else if (gameOver) {
+      resetGame();
+    } else {
+      birdFlap = true;
+    }
+  }
+});
 
-// Initial call to draw the start screen
-update();
+function loadHighScore() {
+  let stored = localStorage.getItem('FloppyBirdHighScore');
+  if (stored) FloppyBirdHighScore = parseInt(stored, 10);
+}
+
+loadHighScore();
+render(); // Initial screen
