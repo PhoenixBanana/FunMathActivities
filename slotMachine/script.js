@@ -30,12 +30,9 @@ async function roll() {
 
     console.log(rolledNum1, rolledNum2, rolledNum3);
 
-    credits -= bet;
-
     const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 
     for (let i = 0; i < 20; i++) {
-        // ADD SLOTS AND FIX CHANGING <h2> TO <p>!!!
         numDisplay1.innerHTML = Math.floor(Math.random() * 10);
         numDisplay1.style.color = colors[Math.floor(Math.random() * colors.length)];
         numDisplay2.innerHTML = Math.floor(Math.random() * 10);
@@ -55,16 +52,17 @@ async function roll() {
         rolledNum1 === rolledNum3 ||
         rolledNum2 === rolledNum3
     ) {
-        credits += Math.floor(bet * 10); // Win back 10 times the bet
-        console.log(`Two numbers match - won back ${bet * 10} credits!`);
+        credits += Math.floor(bet * 2); // Win back 2 times the bet
+        console.log(`Two numbers match - won back ${bet * 2} credits!`);
     } else if (rolledNum1 === rolledNum2 && rolledNum2 === rolledNum3) {
-        credits += Math.floor(bet * 2); // Win back double your bet
-        console.log(`Triple match - jackpot! Won ${bet * 2} credits!`);
+        credits += Math.floor(bet * 10); // Win back double your bet
+        console.log(`Triple match - jackpot! Won ${bet * 10} credits!`);
     } else if ( rolledNum1 >= 5 && rolledNum2 >= 5 && rolledNum3 >= 5) {
         credits += Math.floor(bet * 3); // Win back triple your bet
         console.log(`All numbers are greater than 5 - won ${bet * 3} credits!`);
     } else {
         console.log('No win.');
+        credits -= bet; // Lose the bet
     }
 
     creditsDisplay.innerHTML = "Credits: " + credits;
