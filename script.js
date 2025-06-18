@@ -87,10 +87,21 @@ async function checkJokeAnswer() {
       alert("Wasn't there some game about a certain franchise established this year?");
       break;
     case "cheese":
-      alert("Surya broke my computer.");
+      alert("Of course.");
       break;
-    case "surya":
-      alert("He broke my computer by mashing all the keys on it. Surya, if you're reading this: I know where you live.");
+    case "the cake is a lie":
+      alert("We love portal.");
+      break;
+    case "":
+      alert("You didn't even type anything! Try again!");
+      break;
+    case "therian":
+      alert("You are a therian? Awesome! Here's a little code for my fellow alterhumans: THRN50");
+      break;
+    case "thrn50":
+      alert("A gift for my fellow therians, you now have 50 more credits.");
+      localStorage.setItem('Credits', (parseInt(localStorage.getItem('Credits')) || 0) + 50);
+      Credits = parseInt(localStorage.getItem('Credits')) || 0;
       break;
     default:
       alert("No, that's not it. Keep trying!");
