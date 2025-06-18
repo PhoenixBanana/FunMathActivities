@@ -1,24 +1,25 @@
 let randomNumber = Math.floor(Math.random() * 100) + 1;
 let guessCount = 0;
+let Credits = 0;
+
+// DOM Elements
 const jokeAnswer = document.getElementById('jokeAnswer');
 const checkButton = document.getElementById('checkButton');
 const guessBox = document.getElementById('guessBox');
 const resultDisplay = document.getElementById('resultDisplay');
 const guessDisplay = document.getElementById('guessDisplay');
-let Credits = 0;
-let codeRedeemed_T = false;
+const answerButton = document.getElementById('answerButton');
 
-// Precomputed SHA-256 hash for the answer (lowercase)
-// You can generate this beforehand using a trusted tool.
-// Simplest is to:
-//  1. Start debugging
-//  2. Go to the DEBUG CONSOLE
-//  3. Type this:
-//      hashText(cleanText("StringYouWantToHash"))
-//  4. Copy the text here without any trailing spaces:
+// Initialize code redemption flag if not set
+if (localStorage.getItem('codeRedeemed_T') === null) {
+  localStorage.setItem('codeRedeemed_T', 'false');
+}
+let codeRedeemed_T = localStorage.getItem('codeRedeemed_T') === 'true';
+
+// Precomputed SHA-256 hash for the correct answer
 const correctAnswerHash = "ca5bcec12f716f44d9745d349cc80422f0d14cbab09329caf533bef7c2d952eb";
 
-// A helper function to hash a text string using SHA-256 and return the hex digest
+// Helper function to hash text using SHA-256
 async function hashText(text) {
   const encoder = new TextEncoder();
   const data = encoder.encode(text);
@@ -28,31 +29,22 @@ async function hashText(text) {
   return hashHex;
 }
 
+// Helper function to clean input text
 function cleanText(text) {
-  var cleaned = text.toLowerCase();
-  cleaned = cleaned.replace(/\s+/g, " ").replace(/^\s+/, "").replace(/\s+$/, "");
-  return cleaned;
+  return text.toLowerCase().replace(/\s+/g, " ").trim();
 }
 
+// Joke answer check logic
 async function checkJokeAnswer() {
-  // Get and clean the answer the user provided:
-  var answer = cleanText(document.getElementById("jokeAnswer").value);
-
-  // Remove any leading "a " or "the " from the front so you don't get penalized for saying "a [ANSWER]" instead of "[ANSWER]":
-  answer = answer.replace(/^(a|the)\s+/, "");
-
-  // Hash the answer so we can compare it to our precomputed hash answer:
+  let answer = cleanText(jokeAnswer.value).replace(/^(a|the)\s+/, "");
   const userAnswerHash = await hashText(answer);
 
-  if (userAnswerHash === correctAnswerHash)
-  {
+  if (userAnswerHash === correctAnswerHash) {
     alert("That's correct! Check back again soon for a new joke/riddle!");
     return;
   }
 
-  // They didn't get the answer, so we can do some fun easter egg checks here...
-  switch(answer)
-  {
+  switch(answer) {
     case "42":
       alert("Hitch-hiker's Guide To The Galaxy?");
       break;
@@ -100,34 +92,50 @@ async function checkJokeAnswer() {
       alert("You are a therian? Awesome! Here's a little code for my fellow alterhumans: THRN50");
       break;
     case "thrn50":
-      alert("A gift for my fellow therians, you now have 50 more credits.");
-      localStorage.setItem('Credits', (parseInt(localStorage.getItem('Credits')) || 0) + 50);
-      Credits = parseInt(localStorage.getItem('Credits')) || 0;
-      codeRedeemed_T = true;
-      alert("You now have " + Credits + " credits.");
+      if (codeRedeemed_T) {
+        alert("You already redeemed this code!");
+      } else {
+        alert("A gift for my fellow therians, you now have 50 more credits.");
+        localStorage.setItem('Credits', (parseInt(localStorage.getItem('Credits')) || 0) + 50);
+        Credits = parseInt(localStorage.getItem('Credits')) || 0;
+        codeRedeemed_T = true;
+        localStorage.setItem('codeRedeemed_T', 'true');
+        alert("You now have " + Credits + " credits.");
+      }
       break;
     default:
       alert("No, that's not it. Keep trying!");
   }
 }
 
+// Number guessing game logic
 function checkAnswer() {
   const userAnswer = parseInt(guessBox.value);
   guessCount++;
   guessDisplay.textContent = "Guesses: " + guessCount;
+
   if (userAnswer === randomNumber) {
     alert("Correct! The number is now different!");
     randomNumber = Math.floor(Math.random() * 100) + 1;
     guessCount = 0;
-  } else if(userAnswer <  randomNumber) {
+  } else if (userAnswer < randomNumber) {
     alert("No, the number is bigger. Try again!");
-  } else if(userAnswer > randomNumber) {
+  } else if (userAnswer > randomNumber) {
     alert("Not quite, the number is smaller than that. Try again!");
   }
 }
 
+// Load credits from localStorage
+function loadCredits() {
+  Credits = parseInt(localStorage.getItem('Credits')) || 0;
+}
+
+loadCredits();
+
+// Button & key event bindings
 answerButton.addEventListener('click', checkJokeAnswer);
 checkButton.addEventListener('click', checkAnswer);
+
 jokeAnswer.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
     checkJokeAnswer();
@@ -140,18 +148,10 @@ guessBox.addEventListener('keydown', (event) => {
   }
 });
 
-function loadCredits() {
-  let credits = localStorage.getItem('Credits');
-  if (credits) {
-    Credits = credits;
-  }
-}
-
-loadCredits();
-
+// Debug logging
 document.addEventListener('keypress', (event) => { 
-  console.log(`Key "${event.key}" pressed [event: keypress]`)
-  console.log(localStorage.getItem('Credits'));
-  console.log(localStorage.getItem('LE_jumpBoost'));
-  console.log(localStorage.getItem('LE_lowGravity'));
+  console.log(`Key "${event.key}" pressed [event: keypress]`);
+  console.log("Credits:", localStorage.getItem('Credits'));
+  console.log("LE_jumpBoost:", localStorage.getItem('LE_jumpBoost'));
+  console.log("LE_lowGravity:", localStorage.getItem('LE_lowGravity'));
 });
