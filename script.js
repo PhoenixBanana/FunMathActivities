@@ -6,6 +6,7 @@ const guessBox = document.getElementById('guessBox');
 const resultDisplay = document.getElementById('resultDisplay');
 const guessDisplay = document.getElementById('guessDisplay');
 let Credits = 0;
+let codeRedeemed_T = false;
 
 // Precomputed SHA-256 hash for the answer (lowercase)
 // You can generate this beforehand using a trusted tool.
@@ -102,6 +103,8 @@ async function checkJokeAnswer() {
       alert("A gift for my fellow therians, you now have 50 more credits.");
       localStorage.setItem('Credits', (parseInt(localStorage.getItem('Credits')) || 0) + 50);
       Credits = parseInt(localStorage.getItem('Credits')) || 0;
+      codeRedeemed_T = true;
+      alert("You now have " + Credits + " credits.");
       break;
     default:
       alert("No, that's not it. Keep trying!");
