@@ -66,8 +66,9 @@ async function checkCodeEntry() {
     case "skibidi":
     case "rizz":
     case "gyatt":
+    case "gyat":
     case "fortnite":
-      alert("no. do not.");
+      alert("No. Do not.");
       break;
     case "bill cipher":
     case "cipher":
@@ -103,7 +104,15 @@ async function checkCodeEntry() {
       alert("You didn't even type anything! Try again!");
       break;
     case "therian":
+    case "therians":
+    case "therianthrope":
+    case "therianthropes":
+    case "therianthropy":
       alert("Therians geT too mucH hate just foR being our Natural 5elves. I made a c0de just for us.");
+      break;
+    case "bat":
+    case "bats":
+      alert("Correct! Check back later for another riddle/joke!");
       break;
     default:
       alert("No, that's not it. Keep trying!");
