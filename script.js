@@ -3,7 +3,7 @@ let guessCount = 0;
 let Credits = 0;
 
 // DOM Elements
-const jokeAnswer = document.getElementById('jokeAnswer');
+const codeEntry = document.getElementById('codeEntry');
 const checkButton = document.getElementById('checkButton');
 const guessBox = document.getElementById('guessBox');
 const resultDisplay = document.getElementById('resultDisplay');
@@ -16,8 +16,13 @@ if (localStorage.getItem('codeRedeemed_T') === null) {
 }
 let codeRedeemed_T = localStorage.getItem('codeRedeemed_T') === 'true';
 
-// Precomputed SHA-256 hash for the correct answer
-const correctAnswerHash = "ca5bcec12f716f44d9745d349cc80422f0d14cbab09329caf533bef7c2d952eb";
+// Precomputed SHA-256 hash for the answer (lowercase)
+//  1. Start debugging
+//  2. Go to the DEBUG CONSOLE
+//  3. Type this:
+//      hashText(cleanText("StringYouWantToHash"))
+//  4. Copy the text here without any trailing spaces
+const currentCodeHash = "906a5a6f1852f5446091395cefa0a5a3641cbc8cff01305cc4e4e5db9776d6cc";
 
 // Helper function to hash text using SHA-256
 async function hashText(text) {
@@ -34,13 +39,22 @@ function cleanText(text) {
   return text.toLowerCase().replace(/\s+/g, " ").trim();
 }
 
-// Joke answer check logic
-async function checkJokeAnswer() {
-  let answer = cleanText(jokeAnswer.value).replace(/^(a|the)\s+/, "");
-  const userAnswerHash = await hashText(answer);
+// Code entry check logic
+async function checkCodeEntry() {
+  let answer = cleanText(codeEntry.value).replace(/^(a|the)\s+/, "");
+  const userCodeInputHash = await hashText(answer);
 
-  if (userAnswerHash === correctAnswerHash) {
-    alert("That's correct! Check back again soon for a new joke/riddle!");
+  if (userCodeInputHash === currentCodeHash) {
+    if (codeRedeemed_T) {
+        alert("You already redeemed this code!");
+      } else {
+        alert("A gift for my fellow therians, you now have 50 more credits.");
+        localStorage.setItem('Credits', (parseInt(localStorage.getItem('Credits')) || 0) + 50);
+        Credits = parseInt(localStorage.getItem('Credits')) || 0;
+        codeRedeemed_T = true;
+        localStorage.setItem('codeRedeemed_T', 'true');
+        alert("You now have " + Credits + " credits.");
+      }
     return;
   }
 
@@ -89,19 +103,7 @@ async function checkJokeAnswer() {
       alert("You didn't even type anything! Try again!");
       break;
     case "therian":
-      alert("You are a therian? Awesome! Here's a little code for my fellow alterhumans: THRN50");
-      break;
-    case "thrn50":
-      if (codeRedeemed_T) {
-        alert("You already redeemed this code!");
-      } else {
-        alert("A gift for my fellow therians, you now have 50 more credits.");
-        localStorage.setItem('Credits', (parseInt(localStorage.getItem('Credits')) || 0) + 50);
-        Credits = parseInt(localStorage.getItem('Credits')) || 0;
-        codeRedeemed_T = true;
-        localStorage.setItem('codeRedeemed_T', 'true');
-        alert("You now have " + Credits + " credits.");
-      }
+      alert("Therians geT too mucH hate just foR being our Natural 5elves. I made a c0de just for us.");
       break;
     default:
       alert("No, that's not it. Keep trying!");
@@ -133,12 +135,12 @@ function loadCredits() {
 loadCredits();
 
 // Button & key event bindings
-answerButton.addEventListener('click', checkJokeAnswer);
+answerButton.addEventListener('click', checkCodeEntry);
 checkButton.addEventListener('click', checkAnswer);
 
-jokeAnswer.addEventListener('keydown', (event) => {
+codeEntry.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
-    checkJokeAnswer();
+    checkCodeEntry();
   }
 });
 

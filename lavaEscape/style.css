@@ -1,19 +1,6 @@
-/* style.css */
-
-/* Remove default margins and center the canvas on a dark background */
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #222;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
   /* Style the canvas element with a 4px black border and white background */
   #gameCanvas {
     border: 4px solid black;
     background-color: #fff;
+
   }
-  

@@ -1,9 +1,29 @@
+header {
+  display: flex;
+  justify-content: space-between; /* or space-around, space-evenly */
+  align-items: center;
+  background-color: #ffd;
+  color: white;
+  padding: 10px 20px;
+}
+
+a {
+    color: #00f;
+    font:100% wtahoma,Tahoma,Arial,sans-serif;
+}
+
 body {
     background-color: lavender;
-    font-family: "Rubik Glitch", sans-serif;
+}
+
+p {
+    font:76% wtahoma,Tahoma,Arial,sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
 }
 
 h1 {
+    text-align: center;
     font-family: "Roboto Mono", sans-serif;
 }
 

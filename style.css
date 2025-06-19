@@ -18,9 +18,19 @@
 }
 
 #news {
-    color: #C0e
+    color: #C0e;
 }
 
 #payoutInfo {
-    color: #e0C
+    color: #e0C;
+}
+
+#myself {
+    color: #00f;
+    font-family: "Roboto Mono", sans-serif;
+}
+
+#siteUpdates {
+    color: #FFF;
+    font:100% wtahoma,Tahoma,Arial,sans-serif;
 }
