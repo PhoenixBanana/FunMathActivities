@@ -34,8 +34,8 @@ const player = {
 };
 
 // Gravity and jump settings
-const gravity = lowGravity == 1 ? 0.25 : 0.5; // Adjust gravity based on lowGravity setting
-const jumpVelocity = jumpBoost == 1 ? -18 : -13; // Adjust jump velocity based on jumpBoost setting
+const gravity = lowGravity == 1 ? 0.4 : 0.5; // Adjust gravity based on lowGravity setting
+const jumpVelocity = jumpBoost == 1 ? -15 : -13; // Adjust jump velocity based on jumpBoost setting
 
 // Platform settings
 const platformWidth = 100;  
