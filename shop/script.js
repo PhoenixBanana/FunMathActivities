@@ -55,5 +55,14 @@ LE_lowGravityButton.addEventListener('click', () => {
 
 // Placeholder for No-Hit Mode
 FB_noHitButton.addEventListener('click', () => {
-  alert('Not here yet, it will be here soon!');
+  if (credits < 20) {
+    alert('Not enough credits!');
+  } else if (localStorage.getItem('FB_noHit') === '1') {
+    alert('Invincibility already purchased!');
+  } else {
+    alert('Invincibility purchased!');
+    localStorage.setItem('FB_noHit', '1');
+    localStorage.setItem('Credits', credits - 20);
+    creditsDisplay.innerText = 'Credits: ' + (credits - 20);
+  }
 });

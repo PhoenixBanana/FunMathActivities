@@ -1,4 +1,5 @@
 const gameCanvas = document.getElementById('gameCanvas');
+const noHitDisplay = document.getElementById('noHitDisplay');
 const ctx = gameCanvas.getContext('2d');
 
 // Game settings (delta-time aware)
@@ -24,6 +25,7 @@ let credits = localStorage.getItem('Credits') || 0;
 let FloppyBirdHighScore = 0;
 let gameOver = false;
 let gameStarted = false;
+var noHitTimer = 0;
 
 let lastTime = performance.now();
 
@@ -52,6 +54,13 @@ function update(dt) {
     credits++;
     localStorage.setItem('Credits', credits);
   }
+
+  if (noHitTimer > 0) {
+    noHitTimer = noHitTimer - dt;
+  } else if (noHitTimer <= 0) {
+    noHitTimer = 0;
+    noHitDisplay.innerText = 'Invincibility: inactive';
+  }
 }
 
 function render() {
@@ -78,6 +87,7 @@ function render() {
     ctx.fillStyle = '#FFF';
     ctx.fillText('Score: ' + score, gameCanvas.width / 2 - 80, gameCanvas.height / 2 + 30);
     ctx.fillText('High Score: ' + FloppyBirdHighScore, gameCanvas.width / 2 - 80, gameCanvas.height / 2 + 60);
+    noHitDisplay.innerText = 'Invincibility: inactive';
   }
 }
 
@@ -112,6 +122,7 @@ function drawBird() {
 
 // Obstacles
 function updateObstacles(dt) {
+
   timeSinceLastSpawn += dt;
   if (timeSinceLastSpawn >= SPAWN_RATE) {
     timeSinceLastSpawn = 0;
@@ -143,6 +154,9 @@ function drawObstacles() {
 
 // Collision detection
 function checkCollisions() {
+  if (noHitTimer > 0) {
+    return;
+  } else{
   obstacles.forEach((ob) => {
     if (50 + birdWidth > ob.x && 50 < ob.x + OBSTACLE_WIDTH) {
       if (birdY < ob.gapY || birdY + birdHeight > ob.gapY + OBSTACLE_GAP) {
@@ -150,6 +164,7 @@ function checkCollisions() {
       }
     }
   });
+}
 }
 
 // Score
@@ -198,6 +213,20 @@ document.addEventListener('keydown', (e) => {
       resetGame();
     } else {
       birdFlap = true;
+    }
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'c') {
+    if (localStorage.getItem('FB_noHit') === '1') {
+      noHitTimer = 10; // 10 seconds of invincibility
+      localStorage.setItem('FB_noHit', '0');
+      if (noHitTimer > 0){
+        noHitDisplay.innerText = 'Invincibility: active';
+      }
+    } else if (localStorage.getItem('FB_noHit') === '0') {
+      noHitDisplay.innerText = 'Invincibility: not purchased';
     }
   }
 });

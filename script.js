@@ -63,6 +63,8 @@ async function checkCodeEntry() {
       alert("Hitch-hiker's Guide To The Galaxy?");
       break;
     case "69":
+    case "67":
+    case "41":
     case "skibidi":
     case "rizz":
     case "gyatt":
@@ -108,6 +110,7 @@ async function checkCodeEntry() {
     case "therianthrope":
     case "therianthropes":
     case "therianthropy":
+    case "otherkin":
       alert("Therians geT too mucH hate just foR being our Natural 5elves. I made a c0de just for us.");
       break;
     case "bat":
@@ -165,4 +168,5 @@ document.addEventListener('keypress', (event) => {
   console.log("Credits:", localStorage.getItem('Credits'));
   console.log("LE_jumpBoost:", localStorage.getItem('LE_jumpBoost'));
   console.log("LE_lowGravity:", localStorage.getItem('LE_lowGravity'));
+  console.log("FB_noHit:", localStorage.getItem('FB_noHit'));
 });
