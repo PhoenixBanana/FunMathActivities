@@ -11,10 +11,10 @@ const guessDisplay = document.getElementById('guessDisplay');
 const answerButton = document.getElementById('answerButton');
 
 // Initialize code redemption flag if not set
-if (localStorage.getItem('codeRedeemed_T') === null) {
-  localStorage.setItem('codeRedeemed_T', 'false');
+if (localStorage.getItem('codeRedeemed_0') === null) {
+  localStorage.setItem('codeRedeemed_0', 'false');
 }
-let codeRedeemed_T = localStorage.getItem('codeRedeemed_T') === 'true';
+let codeRedeemed_0 = localStorage.getItem('codeRedeemed_0') === 'true';
 
 // Precomputed SHA-256 hash for the answer (lowercase)
 //  1. Start debugging
@@ -22,7 +22,7 @@ let codeRedeemed_T = localStorage.getItem('codeRedeemed_T') === 'true';
 //  3. Type this:
 //      hashText(cleanText("StringYouWantToHash"))
 //  4. Copy the text here without any trailing spaces
-const currentCodeHash = "906a5a6f1852f5446091395cefa0a5a3641cbc8cff01305cc4e4e5db9776d6cc";
+const currentCodeHash = "aea27f9a66eb72f25e7179cc31d4243e874bce5a04cfabe5ac7a4849a449e416";
 
 // Helper function to hash text using SHA-256
 async function hashText(text) {
@@ -45,14 +45,14 @@ async function checkCodeEntry() {
   const userCodeInputHash = await hashText(answer);
 
   if (userCodeInputHash === currentCodeHash) {
-    if (codeRedeemed_T) {
+    if (codeRedeemed_0) {
         alert("You already redeemed this code!");
       } else {
-        alert("A gift for my fellow therians, you now have 50 more credits.");
-        localStorage.setItem('Credits', (parseInt(localStorage.getItem('Credits')) || 0) + 50);
+        alert("");
+        localStorage.setItem('Credits', (parseInt(localStorage.getItem('Credits')) || 0) + 25);
         Credits = parseInt(localStorage.getItem('Credits')) || 0;
-        codeRedeemed_T = true;
-        localStorage.setItem('codeRedeemed_T', 'true');
+        codeRedeemed_0 = true;
+        localStorage.setItem('codeRedeemed_0', 'true');
         alert("You now have " + Credits + " credits.");
       }
     return;
@@ -62,7 +62,6 @@ async function checkCodeEntry() {
     case "42":
       alert("Hitch-hiker's Guide To The Galaxy?");
       break;
-    case "69":
     case "67":
     case "41":
     case "skibidi":
@@ -97,7 +96,7 @@ async function checkCodeEntry() {
       alert("Wasn't there some game about a certain franchise established this year?");
       break;
     case "cheese":
-      alert("Of course.");
+      alert("cheese.");
       break;
     case "the cake is a lie":
       alert("We love portal.");
@@ -105,16 +104,8 @@ async function checkCodeEntry() {
     case "":
       alert("You didn't even type anything! Try again!");
       break;
-    case "therian":
-    case "therians":
-    case "therianthrope":
-    case "therianthropes":
-    case "therianthropy":
-    case "otherkin":
-      alert("Therians geT too mucH hate just foR being our Natural 5elves. I made a c0de just for us.");
-      break;
-    case "bat":
-    case "bats":
+    case "bookworm":
+    case "bookworms":
       alert("Correct! Check back later for another riddle/joke!");
       break;
     default:

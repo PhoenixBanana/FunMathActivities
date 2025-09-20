@@ -48,21 +48,18 @@ async function roll() {
     numDisplay3.innerHTML = rolledNum3;
 
     if (
-        rolledNum1 === rolledNum2 ||
-        rolledNum1 === rolledNum3 ||
-        rolledNum2 === rolledNum3
+        rolledNum1 === 7 ||
+        rolledNum2 === 7 ||
+        rolledNum3 === 7
     ) {
-        credits += Math.floor(bet * 2); // Win back 2 times the bet
+        credits += Math.floor(bet * 3); // Win back 2 times the bet
         console.log(`Two numbers match - won back ${bet * 2} credits!`);
-    } else if (rolledNum1 === rolledNum2 && rolledNum2 === rolledNum3) {
-        credits += Math.floor(bet * 10); // Win back double your bet
-        console.log(`Triple match - jackpot! Won ${bet * 10} credits!`);
-    } else if ( rolledNum1 >= 5 && rolledNum2 >= 5 && rolledNum3 >= 5) {
-        credits += Math.floor(bet * 3); // Win back triple your bet
-        console.log(`All numbers are greater than 5 - won ${bet * 3} credits!`);
-    } else {
-        console.log('No win.');
-        credits -= bet; // Lose the bet
+    } else if (
+        rolledNum1 === 2 ||
+        rolledNum2 === 2 ||
+        rolledNum3 === 2
+    ) {
+        credits = 0;
     }
 
     creditsDisplay.innerHTML = "Credits: " + credits;

@@ -4,7 +4,7 @@
 }  
 
 #announcement {
-    color: rgb(255, 140, 0);
+    color: rgb(255, 0, 0);
 }
 
 #checkButton {
@@ -18,7 +18,7 @@
 }
 
 #news {
-    color: rgb(240, 0, 0);
+    color: rgba(240, 0, 0, 0.6);
 }
 
 #payoutInfo {

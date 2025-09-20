@@ -57,11 +57,11 @@ LE_lowGravityButton.addEventListener('click', () => {
 FB_noHitButton.addEventListener('click', () => {
   if (credits < 20) {
     alert('Not enough credits!');
-  } else if (localStorage.getItem('FB_noHit') === '1') {
+  } else if (localStorage.getItem('FB_noHit') === 1) {
     alert('Invincibility already purchased!');
   } else {
     alert('Invincibility purchased!');
-    localStorage.setItem('FB_noHit', '1');
+    localStorage.setItem('FB_noHit', ((localStorage.getItem('FB_noHit')) + 1));
     localStorage.setItem('Credits', credits - 20);
     creditsDisplay.innerText = 'Credits: ' + (credits - 20);
   }

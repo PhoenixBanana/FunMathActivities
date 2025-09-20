@@ -26,6 +26,9 @@ let FloppyBirdHighScore = 0;
 let gameOver = false;
 let gameStarted = false;
 var noHitTimer = 0;
+var noHitTimerDisplay = document.getElementById('noHitTimerDisplay');
+var noHitCountDisplay = document.getElementById('noHitCountDisplay');
+noHitCountDisplay.innerText = 'Invincibility count: ' + localStorage.getItem('FB_noHit');
 
 let lastTime = performance.now();
 
@@ -60,6 +63,12 @@ function update(dt) {
   } else if (noHitTimer <= 0) {
     noHitTimer = 0;
     noHitDisplay.innerText = 'Invincibility: inactive';
+  }
+
+  if (noHitTimer > 0) {
+    noHitTimerDisplay.innerText = Math.round(noHitTimer);
+  } else if (noHitTimer <= 0) {
+    noHitTimerDisplay.innerText = 'Invincibility inactive.'
   }
 }
 
@@ -115,7 +124,11 @@ function drawBird() {
 
   ctx.translate(birdX + birdWidth / 2, birdY + birdHeight / 2);
   ctx.rotate((rotation * Math.PI) / 180);
-  ctx.fillStyle = '#DD0';
+  if (noHitTimer > 0) {
+    ctx.fillStyle = 'rgba(255, 0, 149, 1)';
+  } else if (noHitTimer >= 0) {
+    ctx.fillStyle = '#DD0';
+  }
   ctx.fillRect(-birdWidth / 2, -birdHeight / 2, birdWidth, birdHeight);
   ctx.restore();
 }
@@ -219,13 +232,14 @@ document.addEventListener('keydown', (e) => {
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'c') {
-    if (localStorage.getItem('FB_noHit') === '1') {
-      noHitTimer = 10; // 10 seconds of invincibility
-      localStorage.setItem('FB_noHit', '0');
+    if (localStorage.getItem('FB_noHit') >= 1) {
+      noHitTimer = noHitTimer + 10; // 10 seconds of invincibility
+      localStorage.setItem('FB_noHit', ((localStorage.getItem('FB_noHit')) - 1));
+      noHitCountDisplay.innerText = 'Invincibility count: ' + localStorage.getItem('FB_noHit');
       if (noHitTimer > 0){
         noHitDisplay.innerText = 'Invincibility: active';
       }
-    } else if (localStorage.getItem('FB_noHit') === '0') {
+    } else if (localStorage.getItem('FB_noHit') == 0) {
       noHitDisplay.innerText = 'Invincibility: not purchased';
     }
   }

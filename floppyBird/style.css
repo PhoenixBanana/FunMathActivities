@@ -14,3 +14,7 @@
     background-color: orange;
     cursor: pointer;
 }
+
+body {
+    text-align: center;
+}
